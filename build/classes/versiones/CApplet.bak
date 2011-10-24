@@ -1,0 +1,67 @@
+/*
+ * CApplet.java
+ *
+ * Created on 14 de octubre de 2006, 13:05
+ *
+ * To change this template, choose Tools | Options and locate the template under
+ * the Source Creation and Management node. Right-click the template and choose
+ * Open. You can then make changes to the template in the Source Editor.
+ */
+
+package visujava;
+
+/**
+ *
+ * @author lidia
+ */
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/**
+ *
+ * @author lidia
+ */
+
+public class CApplet extends java.applet.Applet {
+  Scrollbar sbRadio = new Scrollbar();
+  BorderLayout borderLayout1 = new BorderLayout();
+  VentanaCanvas canvas;
+
+  public CApplet() {
+  }
+
+  public void init() {
+    try {
+    jbInit();
+    }
+    catch (Exception e) {
+    e.printStackTrace();
+    }
+  }
+  private void jbInit() throws Exception {
+    int ancho = Integer.parseInt(this.getParameter("WIDTH"));
+    int alto = Integer.parseInt(this.getParameter("HEIGHT"));
+    this.setSize(new Dimension(ancho, alto));
+   // canvas=new VentanaCanvas(ancho,alto);
+    sbRadio.setOrientation(0);
+    sbRadio.setValue(10);
+    sbRadio.setMaximum(110);
+    sbRadio.setMinimum(10);
+    sbRadio.addAdjustmentListener(new java.awt.event.AdjustmentListener() {
+      public void adjustmentValueChanged(AdjustmentEvent ev) {
+        sbRadio_adjustmentValueChanged(ev);
+      }
+    });
+    this.setLayout(borderLayout1);
+    this.add(sbRadio, BorderLayout.NORTH);
+    this.add(canvas, BorderLayout.CENTER);
+  }
+   void sbRadio_adjustmentValueChanged(AdjustmentEvent ev) {
+     canvas.setRadio(ev.getValue());
+  }
+
+}
+
