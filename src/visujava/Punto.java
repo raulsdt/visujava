@@ -262,6 +262,7 @@ public class Punto {
     }
 
     public void mover(int dx, int dy) {
+        /*Modificación realizada por "serrano5510"*/
     }
 
     public unsigned cuadrante() {
