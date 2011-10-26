@@ -262,20 +262,47 @@ public class Punto {
     }
 
     public void mover(int dx, int dy) {
-        /*Modificación realizada por "serrano5510"*/
-        //Desde CONSOLA PERFECTO ssh
-        //Probando Consola com protocolo https//
+        x += dx;
+        y += dy;
     }
 
-    public unsigned cuadrante() {
+    public int cuadrante() {
+        if (x > 0 && y > 0) {
+            return 1;
+        } else if (x > 0 && y < 0) {
+            return 4;
+        } else if (x < 0 && y > 0) {
+            return 2;
+        } else if (x < 0 && y < 0) {
+            return 3;
+        } else {
+            return 0;
+        }
+
     }
 
     public int compX(Punto p) {
+        if (x < p.x || (Math.abs(x - p.x) < Geometria.CERO && y > p.y)) {
+            return -1;
+        } else if (Math.abs(x - p.x) < Geometria.CERO && Math.abs(y - p.y) < Geometria.CERO) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     public int compY(Punto p) {
+        if (y < p.y || (Math.abs(y - p.y) < Geometria.CERO && y > p.x)) {
+            return -1;
+        } else if (Math.abs(x - p.x) < Geometria.CERO && Math.abs(y - p.y) < Geometria.CERO) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     public void setPolares(float longe, float angulo) {
+        x = longe * Math.cos(angulo);
+        y = longe * Math.sin(angulo);
     }
 }
