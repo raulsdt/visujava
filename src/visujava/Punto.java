@@ -220,7 +220,13 @@ public class Punto {
         }
 
     }
-
+    
+    
+    /**
+     * @see Ángulo que forma con el Punto pt (en radianres) 
+     * @param pt
+     * @return Ángulo en radianes
+     */
     public float angulo(Punto pt) {
         double angulo = Math.abs(Math.atan(pt.x / pt.y));
         int cuadrante = cuadrante(pt);
@@ -238,7 +244,13 @@ public class Punto {
                 return (float) angulo;
         }
     }
-
+    
+    /**
+     * @see Dice si el punto está entre el punto a y b
+     * @param a
+     * @param b
+     * @return True si está entre los dos punto o False si no lo está
+     */
     public boolean entre(Punto a, Punto b) {
         if (colineal(a, b)) {//Es colineal
             if (a.x < x && x < b.x) {
@@ -250,22 +262,37 @@ public class Punto {
             return false;
         }
     }
-
+    
+    /**
+     * @see Rota el punto 90º
+     */
     public void rotar90() {
         x = -y;
         y = x;
     }
-
+    
+    /**
+     * @see Rota el punto 270º
+     */
     public void rotar270() {
         x = y;
         y = -x;
     }
-
+    
+    /**
+     * @see Mueve un punto un desplazamiento en 'x' e 'y'
+     * @param dx
+     * @param dy
+     */
     public void mover(int dx, int dy) {
         x += dx;
         y += dy;
     }
-
+    
+    /**
+     * @see Determina el cuadrante en el que se encuentra el punto
+     * @return Cuadrante en el que se encuentra
+     */
     public int cuadrante() {
         if (x > 0 && y > 0) {
             return 1;
@@ -276,11 +303,15 @@ public class Punto {
         } else if (x < 0 && y < 0) {
             return 3;
         } else {
-            return 0;
+            return 0; //Suponemos punto Origen
         }
-
     }
-
+    
+    /**
+     * @see Determina cual es el punto de menor abscisa
+     * @param p
+     * @return -1 (<) | 0 (==) | 1 (>)
+     */
     public int compX(Punto p) {
         if (x < p.x || (Math.abs(x - p.x) < Geometria.CERO && y > p.y)) {
             return -1;
@@ -290,7 +321,12 @@ public class Punto {
             return 1;
         }
     }
-
+    
+    /**
+     * @see Determina cual es el punto de menor ordenada
+     * @param p
+     * @return -1 (<) | 0 (==) | 1 (>)
+     */
     public int compY(Punto p) {
         if (y < p.y || (Math.abs(y - p.y) < Geometria.CERO && y > p.x)) {
             return -1;
@@ -300,7 +336,12 @@ public class Punto {
             return 1;
         }
     }
-
+    
+    /**
+     * @see Establece las coordenadas del punto apartir de sus polares
+     * @param longe
+     * @param angulo 
+     */
     public void setPolares(float longe, float angulo) {
         x = longe * Math.cos(angulo);
         y = longe * Math.sin(angulo);
