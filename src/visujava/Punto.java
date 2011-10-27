@@ -338,7 +338,7 @@ public class Punto {
     }
     
     /**
-     * @see Establece las coordenadas del punto apartir de sus polares
+     * @see Establece las coordenadas del punto a partir de sus polares
      * @param longe
      * @param angulo 
      */

@@ -182,4 +182,105 @@ public class Segmento {
         b.out ();
     }
     
+    /************************** METODOS PROPIOS *************************/
+    
+    /**
+     * @see Intersección de segmentos
+     * @param se
+     * @return True si se produce intersección, False en caso contrario
+     */
+    public boolean interseccion(Segmento se){
+        
+    }
+    
+    /**
+     * @see Punto de intersección entre dos segmentos
+     * @param se
+     * @return 
+     */
+    public Punto puntoInterseccion(Segmento se){
+        if(interseccion(se) == true){
+            Punto pAux = new Punto();
+            //Calculamos punto de intersección
+            return pAux; 
+        }else{
+            return null;
+        }
+    }
+    
+    /**
+     * @see Intersección impropia de segmentos
+     * @param se
+     * @return 
+     */
+    public boolean interseccionImpropia(Segmento se){
+        
+    }
+    
+    /**
+     * @see Punto de intersección impropia entre dos segmentos
+     * @param se
+     * @return 
+     */
+    public Punto puntoInterseccionImpropia(Segmento se){
+        if(interseccionImpropia(se) == true){
+            Punto pAux = new Punto();
+            //Implementar punto de intersección impropia
+            return pAux;
+        }else{
+            return null;
+        }
+    }
+    
+    /**
+     * @see Solapamiento de segmentos
+     * @param se
+     * @return True si se solapan los segmentos y False en caso contrario
+     */
+    public boolean solapamiento(Segmento se){
+        
+    }
+    
+    /**
+     * @see Segmento dentro de otro segmento
+     * @param se
+     * @return True si el segmento se está dentro y False si no lo está
+     */
+    public boolean dentro(Segmento se){
+        //Tienen que solaparse y además estar uno dentro del otro
+    }
+    
+    /**
+     * @see Detecta si el punto pertenece al segmento
+     * @param p
+     * @return True si el punto se encuentra en el segmento y False en caso contrario
+     */
+    public boolean contienePunto(Punto p){
+        
+    }
+    
+    /**
+     * @see Rota el segmento 90º
+     */
+    public void rotar90(){
+        
+    }
+    
+    /**
+     * @see Rota el segmento 207º
+     */
+    public void rotar270(){
+        
+    }
+    
+    /**
+     * @see Compara si (this) está a la izquierda, derecha o es igual que el segmento
+     * @param se
+     * @return izquierda (-1) | igual (0) | derecha (1)
+     */
+    public int compSegmento(Segmento se){
+        
+    }
 }
+
+
