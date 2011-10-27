@@ -3,6 +3,7 @@
  Clase: Segmento.java
  * author: Jose Manuel Serrano
  * author: Raúl Salazar
+ * Cambios desde netbeans push
 ******************************************************************************/
 
 package visujava;
