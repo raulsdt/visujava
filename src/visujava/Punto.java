@@ -223,7 +223,7 @@ public class Punto {
     
     
     /**
-     * @see Ángulo que forma con el Punto pt (en radianres) 
+     * Ángulo que forma con el Punto pt (en radianres) 
      * @param pt
      * @return Ángulo en radianes
      */
@@ -246,17 +246,17 @@ public class Punto {
     }
     
     /**
-     * @see Dice si el punto está entre el punto a y b
+     * Dice si el punto está entre el punto a y b
      * @param a
      * @param b
      * @return True si está entre los dos punto o False si no lo está
      */
     public boolean entre(Punto a, Punto b) {
         if (colineal(a, b)) {//Es colineal
-            if (a.x < x && x < b.x) {
-                return true;
+            if (a.x != b.x) {
+                return (a.x <= x && x <= b.x || a.x >= x && x >= b.x);
             } else {
-                return false;
+                return (a.y <= y && y <= b.y || a.y >= y && y >= b.y);
             }
         } else {//No es colineal
             return false;
@@ -264,7 +264,7 @@ public class Punto {
     }
     
     /**
-     * @see Rota el punto 90º
+     * Rota el punto 90º
      */
     public void rotar90() {
         x = -y;
@@ -280,7 +280,7 @@ public class Punto {
     }
     
     /**
-     * @see Mueve un punto un desplazamiento en 'x' e 'y'
+     * Mueve un punto un desplazamiento en 'x' e 'y'
      * @param dx
      * @param dy
      */
@@ -290,7 +290,7 @@ public class Punto {
     }
     
     /**
-     * @see Determina el cuadrante en el que se encuentra el punto
+     * Determina el cuadrante en el que se encuentra el punto
      * @return Cuadrante en el que se encuentra
      */
     public int cuadrante() {
@@ -308,7 +308,7 @@ public class Punto {
     }
     
     /**
-     * @see Determina cual es el punto de menor abscisa
+     * Determina cual es el punto de menor abscisa
      * @param p
      * @return -1 (<) | 0 (==) | 1 (>)
      */
@@ -323,7 +323,7 @@ public class Punto {
     }
     
     /**
-     * @see Determina cual es el punto de menor ordenada
+     * Determina cual es el punto de menor ordenada
      * @param p
      * @return -1 (<) | 0 (==) | 1 (>)
      */
@@ -338,7 +338,7 @@ public class Punto {
     }
     
     /**
-     * @see Establece las coordenadas del punto a partir de sus polares
+     * Establece las coordenadas del punto a partir de sus polares
      * @param longe
      * @param angulo 
      */

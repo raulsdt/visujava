@@ -110,5 +110,79 @@ public class Poligono {
             v.out ();
         }
     }
-
+    
+    /******************** METODOS PROPIOS *******************/
+    
+    /**
+     * Contructor que construye en poligono aleatorio
+     * @param num Número de vértices
+     * @param semilla Semilla de aleatoriedad
+     */
+    public Poligono(int num,float semilla){
+        
+    }
+    
+    /**
+     * Centroide del poligono
+     * @return Punto centroide del poligono
+     */
+    public Punto centroide(){
+        
+    } 
+    
+    /**
+     * Área del poligono
+     * @return Área
+     */
+    public double areaPoligono(){
+        
+    }
+    
+    /**
+     * Diagonal interna dadas dos posiciones (vertices)
+     * @param a Número del vértice
+     * @param b Número del vértice
+     * @return True si es diagonal interna o False si no lo es
+     */
+    public bool diagonalInterna(int a,int b){
+        
+    }
+    
+    /**
+     * Dice si la recta que pasa por los dos vértices es tangente a los polígonos
+     * @param v1
+     * @param v2
+     * @param p
+     * @return True si es tangente o False si no lo es
+     */
+    public bool tangenteEntrPoligonos(Vertice v1, Vertice v2, Poligono p){
+        
+    }
+    
+    /**
+     * Polígono convexo
+     * @return True si el polígono es convexo o False si no lo es
+     */
+    public bool conveso(){
+        //Es conveso si todos sus vértices lo son
+    }
+    
+    /**
+     * Intersección entre poligonos convexos
+     * @param p
+     * @return El poligono intersección de los dos polígonos
+     */
+    public Poligono interseccionEntrePoligonos(Poligono p){
+        
+    }
+    
+    /**
+     * Determina si un punto está dentro del polígono
+     * @param pt
+     * @return True si el punto está dentro del polígono o False si no lo está
+     */
+//    public bool puntoDentroPoligono(Punto pt){
+//        //NO HACER HASTA TEMA 4º
+//        
+//    }
 }

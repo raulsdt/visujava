@@ -189,92 +189,158 @@ public class Segmento {
     /************************** METODOS PROPIOS *************************/
     
     /**
-     * @see Intersección de segmentos
+     * Intersección de segmentos
      * @param se
      * @return True si se produce intersección, False en caso contrario
      */
     public boolean interseccion(Segmento se){
-        
+        if(se.a.colineal(a, b) || se.b.colineal(a, b)
+                || a.colineal(se.a,se.b) || b.colineal(se.a, se.b)){
+            return false;
+        }else{
+            return ( (se.a.izquierda(a, b) ^ se.b.izquierda(a, b)) 
+                    && (a.izquierda(se.a, se.b) ^ b.izquierda(se.a, se.b)) );
+        }
     }
     
     /**
-     * @see Punto de intersección entre dos segmentos
+     * Punto de intersección entre dos segmentos
      * @param se
      * @return 
      */
     public Punto puntoInterseccion(Segmento se){
-        if(interseccion(se) == true){
-            Punto pAux = new Punto();
-            //Calculamos punto de intersección
-            return pAux; 
+        if(interseccion(se)){
+            double m1,m2,c1,c2;
+            double x,y;
+            //Obtenemos las formas implicitas de los segmentos
+            // y = mx+c , siendo "m" la pendiente y "c" el termino independiente
+            
+            // 1º Segmento
+            m1 = (b.y - a.y )/(b.x - a.x);
+            c1 = b.y - m1 * b.x;
+            
+            // 2º Segmento
+            m2 = (se.b.y - se.a.y )/(se.b.x - se.a.x);
+            c2 = se.b.y - m2 * se.b.x;
+            
+            //Resolvemos el sistema de ecuaciones
+            x = (c1-c2)/(m2-m1);
+            y = m1 * x +c1;
+            
+            return new Punto(x,y); 
         }else{
             return null;
         }
     }
     
     /**
-     * @see Intersección impropia de segmentos
+     * Intersección impropia de segmentos
      * @param se
      * @return 
      */
     public boolean interseccionImpropia(Segmento se){
-        
+        if(se.a.entre(a, b) || se.b.entre(a, b)
+                || a.entre(se.a, se.b) || b.entre(se.a, se.b)){
+            return true;
+        }else{
+            return ( (se.a.izquierda(a, b) ^ se.b.izquierda(a, b)) 
+                    && (a.izquierda(se.a, se.b) ^ b.izquierda(se.a, se.b)) );
+        }
     }
     
     /**
-     * @see Punto de intersección impropia entre dos segmentos
+     * Punto de intersección impropia entre dos segmentos
      * @param se
      * @return 
      */
     public Punto puntoInterseccionImpropia(Segmento se){
-        if(interseccionImpropia(se) == true){
-            Punto pAux = new Punto();
-            //Implementar punto de intersección impropia
-            return pAux;
+        //Sabemos que uno de los puntos es la intersección
+        //El que esté entre un segmento, ese es el punto
+        if(interseccionImpropia(se)){         
+            if(a.entre(se.a, se.b)){
+                return a;
+            }else{
+                if(b.entre(se.a, se.b)){
+                    return b;
+                }else{
+                    if(se.a.entre(a, b)){
+                        return se.a;
+                    }else{
+                        return se.b;
+                    }
+                }
+            }
         }else{
             return null;
         }
     }
     
     /**
-     * @see Solapamiento de segmentos
+     * Solapamiento de segmentos
      * @param se
      * @return True si se solapan los segmentos y False en caso contrario
      */
     public boolean solapamiento(Segmento se){
-        
+        //Vemos si son colineales
+        if(a.colineal(b, se.a) || a.colineal(b, se.b)
+                || se.a.colineal(se.b,a) || se.a.colineal(se.b, b)){
+            if(se.a.entre(a, b) || se.b.entre(a, b)
+                || a.entre(se.a, se.b) || b.entre(se.a, se.b)){
+                return true; // Se solapan
+            }else{
+                return false; // Son colineales pero no se solapan
+            }
+        }else{
+            return false; // No colineales -- No solapamiento
+        }
     }
     
     /**
-     * @see Segmento dentro de otro segmento
+     * Segmento dentro de otro segmento
      * @param se
      * @return True si el segmento se está dentro y False si no lo está
      */
     public boolean dentro(Segmento se){
         //Tienen que solaparse y además estar uno dentro del otro
+        if (solapamiento(se)){
+            //Comprovamos si alguno de los segmentos está dentro del otro
+            if(a.entre(se.a, se.b) && b.entre(se.a, se.b)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
     
     /**
-     * @see Detecta si el punto pertenece al segmento
+     * Detecta si el punto pertenece al segmento
      * @param p
      * @return True si el punto se encuentra en el segmento y False en caso contrario
      */
     public boolean contienePunto(Punto p){
-        
+        if(p.entre(a, b)){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     /**
      * @see Rota el segmento 90º
      */
     public void rotar90(){
-        
+        a.rotar90();
+        b.rotar90();
     }
     
     /**
      * @see Rota el segmento 207º
      */
     public void rotar270(){
-        
+        a.rotar270();
+        b.rotar270();
     }
     
     /**
@@ -283,7 +349,15 @@ public class Segmento {
      * @return izquierda (-1) | igual (0) | derecha (1)
      */
     public int compSegmento(Segmento se){
-        
+        if(a.izquierda(se.a, se.b) && b.izquierda(se.a, se.b)){
+            return -1;
+        }else{
+            if(a.derecha(se.a, se.b) && b.derecha(se.a, se.b)){
+                return 1;
+            }else{
+                return 0; // ¿Y si se intersectan? Preguntar...
+            }
+        }
     }
 }
 

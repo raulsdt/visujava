@@ -95,4 +95,29 @@ public class Vertice extends Punto {
         System.out.println (posicion);
     }
     
+    /************************ METODOS PROPIOS *********************/
+    
+    /**
+     * Vertice siguiente del polígono
+     * @return Devuelve una referencia al vértice siguiente de éste en el polígono
+     */
+    public Vertice siguiente(){
+        return null;
+    }
+    
+    /**
+     * Vertice anteriror del poĺigono
+     * @return Devuelve una referencia al vertice anterior a éste en el polígono
+     */
+    public Vertice anterior(){
+        return null;
+    }
+    
+    /**
+     * Vertice convexo
+     * @return Devuelve True si es convexo o False si no lo es
+     */
+    publi bool convexo(){
+        
+    }
 }
