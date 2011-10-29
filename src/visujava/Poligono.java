@@ -123,12 +123,12 @@ public class Poligono {
         //Vamos a introducir los vertices del poligono ya ordenados
         Vertice vertice = new Vertice();
         Random rnd = new Random(semilla);
-            
+
         Vertices.add(new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, 1));
         Vertices.add(new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, 2));
-        
+
         int i = 3;
-        while(i < num){
+        while (i < num) {
             vertice = new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, i);
             if (vertice.izquierda(Vertices.get(i - 1), Vertices.get(i - 2))) {
                 Vertices.add(vertice);
@@ -137,14 +137,48 @@ public class Poligono {
         }
         nVertices = num;
     }
+    
+    /**
+     * @ see Calcula el baricentro de un triangulo
+     * @param v1 Vertice 1
+     * @param v2 Vertice 2
+     * @param v3 Vertice 3
+     * @return Baricentro
+     */
+    private Punto baricentroTriangulo(Punto v1, Punto v2, Punto v3) {
+        return new Punto((v1.x + v2.x + v3.x) / 3, (v1.y + v2.y + v3.y) / 3);
 
+    }
 
     /**
      * Centroide del poligono
      * @return Punto centroide del poligono
      */
     public Punto centroide() {
-        
+        ArrayList<Punto> Centroides = new ArrayList<Punto>();
+        ArrayList<Punto> Centroides2 = new ArrayList<Punto>();
+
+        Centroides.add(baricentroTriangulo(Vertices.get(0), Vertices.get(1), Vertices.get(2)));
+
+        for (int i = 2; i < Vertices.size() - 1; i++) {
+            Centroides.add(baricentroTriangulo(Vertices.get(0), Vertices.get(i), Vertices.get(i + 1)));
+        }
+
+        while (Centroides.size() > 3) {
+            Centroides2.clear();
+            Centroides2 = new ArrayList<Punto>(Centroides);
+            Centroides.clear();
+            Centroides.add(baricentroTriangulo(Centroides2.get(0), Centroides2.get(1), Centroides2.get(2)));
+            for (int i = 2; i < Centroides2.size() - 1; i++) {
+                Centroides.add(baricentroTriangulo(Centroides2.get(0), Centroides2.get(i), Centroides2.get(i + 1)));
+            }
+        }
+        if (Centroides.size() == 3) {
+            return baricentroTriangulo(Centroides.get(0), Centroides.get(1), Centroides.get(2));
+        } else {
+            return new Segmento(Centroides.get(0), Centroides.get(1)).PuntoMedio();
+        }
+
     }
 
     /**
@@ -152,27 +186,27 @@ public class Poligono {
      * @return Área
      */
     public double areaPoligono() {//Diviendo en triangulos
-        Punto p = new Punto(0,0);
+        Punto p = new Punto(0, 0);
         double area = 0;
-        
-        for(int i = 0; i< nVertices; i++){
-             area += p.areaTriangulo2(lee(i), lee(i+1)) / 2;
+
+        for (int i = 0; i < nVertices; i++) {
+            area += p.areaTriangulo2(lee(i), lee(i + 1)) / 2;
         }
-        
+
         return area;
     }
-    
-    private boolean intersectaDiagonal(int i,int j){
-        Segmento diagonal = new Segmento(lee(i),lee(j));
-        
-        for(int h = 0; h < nVertices; h++){
-            if(diagonal.interseccion(new Segmento(lee(h),lee(h++)))){
+
+    private boolean intersectaDiagonal(int i, int j) {
+        Segmento diagonal = new Segmento(lee(i), lee(j));
+
+        for (int h = 0; h < nVertices; h++) {
+            if (diagonal.interseccion(new Segmento(lee(h), lee(h++)))) {
                 return false;
             }
         }
         return true;
     }
-    
+
     /**
      * Diagonal interna dadas dos posiciones (vertices)
      * @param a Número del vértice
@@ -180,24 +214,24 @@ public class Poligono {
      * @return True si es diagonal interna o False si no lo es
      */
     public boolean diagonalInterna(int i, int j) {
-        if(convexo()){
-            if(lee((i-1)%nVertices).izquierda(lee(i%nVertices), lee(j%nVertices))
-                    && lee((i+1)%nVertices).izquierda(lee(i%nVertices), lee(j%nVertices))){
+        if (convexo()) {
+            if (lee((i - 1) % nVertices).izquierda(lee(i % nVertices), lee(j % nVertices))
+                    && lee((i + 1) % nVertices).izquierda(lee(i % nVertices), lee(j % nVertices))) {
                 return intersectaDiagonal(i, j);
-            }else{
+            } else {
                 return false;
             }
-        }else{ //Concavo
-            if(!(lee((i+1)%nVertices).izquierdaSobre(lee(i%nVertices), lee(j%nVertices))
-                    && lee((i-1)%nVertices).izquierdaSobre(lee(j%nVertices), lee(i%nVertices)))){
+        } else { //Concavo
+            if (!(lee((i + 1) % nVertices).izquierdaSobre(lee(i % nVertices), lee(j % nVertices))
+                    && lee((i - 1) % nVertices).izquierdaSobre(lee(j % nVertices), lee(i % nVertices)))) {
                 return intersectaDiagonal(i, j);
-            }else{
+            } else {
                 return false;
             }
         }
     }
-    
-    private boolean tangente(Vertice v, Punto q){
+
+    private boolean tangente(Vertice v, Punto q) {
         return q.izquierdaSobre(v.anterior(), v) ^ q.izquierdaSobre(v, v.siguiente());
     }
 
@@ -208,11 +242,11 @@ public class Poligono {
      * @param p
      * @return True si es tangente o False si no lo es
      */
-    public boolean tangenteEntrePoligonos(int posV1, int posV2, Poligono p) {  
-        if(tangente(lee(posV1%nVertices), p.lee(posV2%p.nVertices))
-                && tangente(p.lee(posV2%p.nVertices),lee(posV1%nVertices))){
+    public boolean tangenteEntrePoligonos(int posV1, int posV2, Poligono p) {
+        if (tangente(lee(posV1 % nVertices), p.lee(posV2 % p.nVertices))
+                && tangente(p.lee(posV2 % p.nVertices), lee(posV1 % nVertices))) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -236,7 +270,7 @@ public class Poligono {
      * @return El poligono intersección de los dos polígonos
      */
     public Poligono interseccionEntrePoligonos(Poligono p) {
-        
+        return null;
     }
     /**
      * Determina si un punto está dentro del polígono
