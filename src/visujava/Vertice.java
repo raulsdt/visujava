@@ -112,7 +112,7 @@ public class Vertice extends Punto {
      * @return Devuelve una referencia al vértice siguiente de éste en el polígono
      */
     public Vertice siguiente(){
-        return null;
+        return polig.lee((posicion + 1) % polig.nVertices);
     }
     
     /**
@@ -120,7 +120,7 @@ public class Vertice extends Punto {
      * @return Devuelve una referencia al vertice anterior a éste en el polígono
      */
     public Vertice anterior(){
-        return null;
+        return polig.lee((posicion - 1) % polig.nVertices);
     }
     
     /**
