@@ -43,6 +43,16 @@ public class Vertice extends Punto {
         polig = pol;
     }
     
+     /** Construye un v�rtice similar al anterior, con los valores xx e yy que se
+     corresponden con las coordenadas X e Y del Punto p asociado al v�rtice, 
+     introduciendose ademas la posicion. */
+    public Vertice (double xx,double yy, Poligono pol, int pos) {
+        x = xx; y = yy;
+	posicion = pos;
+        polig = pol;
+    }
+    
+    
     /** Lee el valor de la x */
     public double leex () {
         return x;
@@ -73,7 +83,7 @@ public class Vertice extends Punto {
     /** Modifica la posici�n del v�rtice dentro del pol�gono. Esta operaci�n
      se ha definido como protegida porque es peligroso que el usuario pueda
      modificar la posici�n del v�rtice. */
-    protected void modificaPosicion (int pos) {
+    public void modificaPosicion (int pos) {
         posicion = pos;
     }
     
@@ -117,7 +127,7 @@ public class Vertice extends Punto {
      * Vertice convexo
      * @return Devuelve True si es convexo o False si no lo es
      */
-    publi bool convexo(){
-        
+    public boolean convexo(){
+        return anterior().izquierda(this, siguiente());
     }
 }

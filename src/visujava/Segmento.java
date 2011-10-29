@@ -3,7 +3,6 @@
  Clase: Segmento.java
  * author: Jose Manuel Serrano
  * author: Raúl Salazar
- * Cambios desde netbeans push
 ******************************************************************************/
 
 package visujava;
@@ -341,6 +340,14 @@ public class Segmento {
     public void rotar270(){
         a.rotar270();
         b.rotar270();
+    }
+    
+    /**
+     * @see Calcula el punto medio del segmento
+     * @return Punto medio del segmento
+     */ 
+    public Punto PuntoMedio(){
+        return new Punto((a.x+b.x)/2, (a.y+b.y)/2);
     }
     
     /**
