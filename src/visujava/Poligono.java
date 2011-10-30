@@ -137,7 +137,7 @@ public class Poligono {
         }
         nVertices = num;
     }
-    
+
     /**
      * @ see Calcula el baricentro de un triangulo
      * @param v1 Vertice 1
@@ -155,30 +155,18 @@ public class Poligono {
      * @return Punto centroide del poligono
      */
     public Punto centroide() {
-        ArrayList<Punto> Centroides = new ArrayList<Punto>();
-        ArrayList<Punto> Centroides2 = new ArrayList<Punto>();
-
-        Centroides.add(baricentroTriangulo(Vertices.get(0), Vertices.get(1), Vertices.get(2)));
-
-        for (int i = 2; i < Vertices.size() - 1; i++) {
-            Centroides.add(baricentroTriangulo(Vertices.get(0), Vertices.get(i), Vertices.get(i + 1)));
+        //Funcionaría en el caso de los vertices estuvieran ordenador a priori
+        double cx = 0, cy = 0;
+        for (int i = 0; i < nVertices - 1; i++) {
+            cx += ((lee(i).x + lee(i + 1).x) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
+            cy += ((lee(i).y + lee(i + 1).y) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
         }
-
-        while (Centroides.size() > 3) {
-            Centroides2.clear();
-            Centroides2 = new ArrayList<Punto>(Centroides);
-            Centroides.clear();
-            Centroides.add(baricentroTriangulo(Centroides2.get(0), Centroides2.get(1), Centroides2.get(2)));
-            for (int i = 2; i < Centroides2.size() - 1; i++) {
-                Centroides.add(baricentroTriangulo(Centroides2.get(0), Centroides2.get(i), Centroides2.get(i + 1)));
-            }
-        }
-        if (Centroides.size() == 3) {
-            return baricentroTriangulo(Centroides.get(0), Centroides.get(1), Centroides.get(2));
-        } else {
-            return new Segmento(Centroides.get(0), Centroides.get(1)).PuntoMedio();
-        }
-
+        cx += ((lee(nVertices - 1).x + lee(0).x) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
+        cy += ((lee(nVertices - 1).y + lee(0).y) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
+        cx /= (6 * areaPoligono());
+        cy /= (6 * areaPoligono());
+        
+        return new Punto(cx,cy);
     }
 
     /**
