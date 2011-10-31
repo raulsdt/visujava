@@ -154,19 +154,32 @@ public class Poligono {
      * Centroide del poligono
      * @return Punto centroide del poligono
      */
+    /* public Punto centroide() {
+    //Funcionaría en el caso de los vertices estuvieran ordenador a priori
+    double cx = 0, cy = 0;
+    for (int i = 0; i < nVertices - 1; i++) {
+    cx += ((lee(i).x + lee(i + 1).x) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
+    cy += ((lee(i).y + lee(i + 1).y) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
+    }
+    cx += ((lee(nVertices - 1).x + lee(0).x) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
+    cy += ((lee(nVertices - 1).y + lee(0).y) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
+    cx /= (6 * areaPoligono());
+    cy /= (6 * areaPoligono());
+    
+    return new Punto(cx,cy);
+    }*/
+    /**
+     * Calcula centroide (medias de X, e Y)
+     * @return el punto del centroide
+     */
     public Punto centroide() {
-        //Funcionaría en el caso de los vertices estuvieran ordenador a priori
-        double cx = 0, cy = 0;
-        for (int i = 0; i < nVertices - 1; i++) {
-            cx += ((lee(i).x + lee(i + 1).x) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
-            cy += ((lee(i).y + lee(i + 1).y) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
+        double totX = 0, totY = 0;
+        for (int i = 0; i < nVertices; i++) {
+            totX += lee(i).x;
+            totY += lee(i).y;
         }
-        cx += ((lee(nVertices - 1).x + lee(0).x) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
-        cy += ((lee(nVertices - 1).y + lee(0).y) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
-        cx /= (6 * areaPoligono());
-        cy /= (6 * areaPoligono());
-        
-        return new Punto(cx,cy);
+
+        return new Punto(totX / nVertices, totY / nVertices);
     }
 
     /**
@@ -188,7 +201,7 @@ public class Poligono {
         Segmento diagonal = new Segmento(lee(i), lee(j));
 
         for (int h = 0; h < nVertices; h++) {
-            if (diagonal.interseccion(new Segmento(lee(h), lee(h++)))) {
+            if (diagonal.intersecta(new Segmento(lee(h), lee(h++)))) {
                 return false;
             }
         }
@@ -230,7 +243,7 @@ public class Poligono {
      * @param p
      * @return True si es tangente o False si no lo es
      */
-    public boolean tangenteEntrePoligonos(int posV1, int posV2, Poligono p) {
+    public boolean esTangente(int posV1, int posV2, Poligono p) {
         if (tangente(lee(posV1 % nVertices), p.lee(posV2 % p.nVertices))
                 && tangente(p.lee(posV2 % p.nVertices), lee(posV1 % nVertices))) {
             return true;
@@ -257,15 +270,15 @@ public class Poligono {
      * @param p
      * @return El poligono intersección de los dos polígonos
      */
-    public Poligono interseccionEntrePoligonos(Poligono p) {
+    public Poligono intersecta(Poligono p) {
         return null;
     }
     /**
-     * Determina si un punto está dentro del polígono
+     * Determina si un punto está contiene del polígono
      * @param pt
-     * @return True si el punto está dentro del polígono o False si no lo está
+     * @return True si el punto está contiene del polígono o False si no lo está
      */
-//    public bool puntoDentroPoligono(Punto pt){
+//    public bool puntoEnPoligono(Punto pt){
 //        //NO HACER HASTA TEMA 4º
 //        
 //    }
