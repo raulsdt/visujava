@@ -31,7 +31,11 @@ public class NubePuntos {
     }
     
     public NubePuntos(NubePuntos n){
-        //Copiar uno a uno los puntos
+        
+        for(int i=0;i<n.num;i++){
+            nube.add(n.getPunto(i));
+        }
+        
     }
     
     /**
@@ -66,7 +70,17 @@ public class NubePuntos {
      * @return Los punto que forman la caja envolvente
      */
     public Poligono cajaEnvolvente() {
+        NubePuntos nubeX = new NubePuntos(ordenaXnube());
+        NubePuntos nubeY = new NubePuntos(ordenaYnube());
+        ArrayList<Vertice> Vertices = new ArrayList<Vertice>();
         
+        //Metemos los vertices del cuadrilatero en sentido antihorario
+        Vertices.add(new Vertice(nubeX.getPunto(0)));
+        Vertices.add(new Vertice(nubeY.getPunto(0)));
+        Vertices.add(new Vertice(nubeX.getPunto(nubeX.num-1)));
+        Vertices.add(new Vertice(nubeY.getPunto(nubeY.num-1)));
+        
+        return new Poligono(Vertices, 4);
     }
 
     /**
@@ -109,13 +123,21 @@ public class NubePuntos {
      * Ordenar la nube de puntos de izquierda a derecha devolviendo las posiciones
      * @return Array de posiciones
      */
-    public ArrayList<Punto> ordenaXindice() {
+    public ArrayList<Integer> ordenaXindice() {
+        ArrayList<Integer> posiciones = new ArrayList<Integer>();
+        NubePuntos nubelo = new NubePuntos(ordenaXnube());
+        
+        for(int i=0;i< nubelo.num;i++){
+            posiciones.add(nube.indexOf(nubelo.getPunto(i)));
+        }
+        return posiciones;
     }
 
     /**
      * Ordena la nube de puntos de arriba a abajo
      */
     public void ordenaY() {
+        Collections.sort(nube, new ComparadorArrAbaj());
     }
 
     /**
@@ -123,12 +145,24 @@ public class NubePuntos {
      * @return Nube de puntos ordenada de arriba a abajo
      */
     public NubePuntos ordenaYnube() {
+        NubePuntos n = new NubePuntos(this);
+        
+        Collections.sort(nube, new ComparadorArrAbaj());
+        
+        return n;
     }
 
     /**
      * Ordenar la nube de puntos de arriba a abajo devolviendo las posiciones
      * @return Array de posiciones
      */
-    public ArrayList<Punto> ordenaYindice() {
+    public ArrayList<Integer> ordenaYindice() {
+        ArrayList<Integer> posiciones = new ArrayList<Integer>();
+        NubePuntos nubelo = new NubePuntos(ordenaYnube());
+        
+        for(int i=0;i< nubelo.num;i++){
+            posiciones.add(nube.indexOf(nubelo.getPunto(i)));
+        }
+        return posiciones;
     }
 }

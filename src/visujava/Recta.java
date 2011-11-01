@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class Recta {
     
-    protected Punto a;
-    protected Punto b;
+    private Punto a;
+    private Punto b;
 
     public Recta(Punto aa, Punto bb){
         a=aa;
@@ -36,12 +36,12 @@ public class Recta {
             // y = mx+c , siendo "m" la pendiente y "c" el termino independiente
 
             // 1º Segmento
-            m1 = (b.y - a.y) / (b.x - a.x);
-            c1 = b.y - m1 * b.x;
+            m1 = (leeB().y - leeA().y) / (leeB().x - leeA().x);
+            c1 = leeB().y - m1 * leeB().x;
 
             // 2º Segmento
-            m2 = (r.b.y - r.a.y) / (r.b.x - r.a.x);
-            c2 = r.b.y - m2 * r.b.x;
+            m2 = (r.leeB().y - r.leeA().y) / (r.leeB().x - r.leeA().x);
+            c2 = r.leeB().y - m2 * r.leeB().x;
             
             if(Math.abs(m1-m2)< Geometria.CERO){
                 return null;
@@ -80,5 +80,21 @@ public class Recta {
         }
         return array;
     }
+
+    /**
+     * @return the a
+     */
+    public Punto leeA() {
+        return a;
+    }
+
+    /**
+     * @return the b
+     */
+    public Punto leeB() {
+        return b;
+    }
+
+  
     
 }

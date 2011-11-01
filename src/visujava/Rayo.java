@@ -25,18 +25,18 @@ public class Rayo extends Recta {
     }
 
     private boolean pertenece(Punto p) {
-        if (p.colineal(a, b)) {
-            if (a.x - b.x <= Geometria.CERO) {//Es vertical
-                if (b.y - a.y > Geometria.CERO) {//Vertical - Sentido positivo
-                    return (p.y >= a.y);
+        if (p.colineal(leeA(), leeB())) {
+            if (leeA().x - leeB().x <= Geometria.CERO) {//Es vertical
+                if (leeB().y - leeA().y > Geometria.CERO) {//Vertical - Sentido positivo
+                    return (p.y >= leeA().y);
                 } else {//Vertical - Sentido negativo
-                    return (p.y <= a.y);
+                    return (p.y <= leeA().y);
                 }
             } else {
-                if (b.x - a.x > Geometria.CERO) { //Diferenciamos sentido (Derecha o izquierda)
-                    return (p.leex() >= a.x);
+                if (leeB().x - leeA().x > Geometria.CERO) { //Diferenciamos sentido (Derecha o izquierda)
+                    return (p.leex() >= leeA().x);
                 } else {
-                    return (p.leex() <= a.x);
+                    return (p.leex() <= leeA().x);
                 }
             }
         }
@@ -54,7 +54,7 @@ public class Rayo extends Recta {
     }
  
     public Punto intersecta(Rayo r) {
-        Punto p = new Punto(new Recta(r.a,r.b).intersecta(this));
+        Punto p = new Punto(new Recta(r.leeA(), r.leeB()).intersecta(this));
         
         if(p!=null && pertenece(p) && r.pertenece(p)){
             return p;
