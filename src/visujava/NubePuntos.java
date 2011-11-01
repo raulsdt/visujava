@@ -75,10 +75,10 @@ public class NubePuntos {
         ArrayList<Vertice> Vertices = new ArrayList<Vertice>();
         
         //Metemos los vertices del cuadrilatero en sentido antihorario
-        Vertices.add(new Vertice(nubeX.getPunto(0)));
-        Vertices.add(new Vertice(nubeY.getPunto(0)));
-        Vertices.add(new Vertice(nubeX.getPunto(nubeX.num-1)));
-        Vertices.add(new Vertice(nubeY.getPunto(nubeY.num-1)));
+        Vertices.add(new Vertice(new Punto(nubeX.getPunto(0).leex(), nubeY.getPunto(0).leey())));
+        Vertices.add(new Vertice(new Punto(nubeX.getPunto(0).leex(), nubeY.getPunto(num-1).leey())));
+        Vertices.add(new Vertice(new Punto(nubeX.getPunto(num-1).leex(), nubeY.getPunto(num-1).leey())));
+        Vertices.add(new Vertice(new Punto(nubeX.getPunto(num-1).leex(), nubeY.getPunto(0).leey())));
         
         return new Poligono(Vertices, 4);
     }
