@@ -5,7 +5,6 @@
 package visujava;
 
 import java.util.*;
-import java.math.*;
 
 /**
  *
@@ -97,7 +96,8 @@ public class NubePuntos {
     }
 
     public Punto puntoCentroide() {
-        
+        //IMPLEMENTAR
+        return null;
     }
 
     /**

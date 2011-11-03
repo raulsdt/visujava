@@ -202,8 +202,8 @@ public class Punto {
 
     //******************************* METODOS CREADOS *************************/
     private int cuadrante(Punto pt) {
-        double difX = x - pt.x;
-        double difY = y - pt.y;
+        double difX = pt.x - x;
+        double difY = pt.y - y;
 
         if (difX > Geometria.CERO) {
             if (difY > Geometria.CERO) {
@@ -230,7 +230,7 @@ public class Punto {
     public float angulo(Punto pt) {
         double angulo = Math.abs(Math.atan(pt.x / pt.y));
         int cuadrante = cuadrante(pt);
-        System.out.println("Cuadrante" + cuadrante);
+//        System.out.println("Cuadrante" + cuadrante + "angulo " + angulo);
         switch (cuadrante) {
             case 2:
                 return (float) (Math.PI - angulo);
@@ -267,16 +267,18 @@ public class Punto {
      * Rota el punto 90º
      */
     public void rotar90() {
+        double aux =  x;
         x = -y;
-        y = x;
+        y = aux;
     }
     
     /**
      * @see Rota el punto 270º
      */
     public void rotar270() {
+        double aux = x;
         x = y;
-        y = -x;
+        y = aux * (-1);
     }
     
     /**
@@ -294,13 +296,13 @@ public class Punto {
      * @return Cuadrante en el que se encuentra
      */
     public int cuadrante() {
-        if (x > 0 && y > 0) {
+        if (x > 0 && y >= 0) {
             return 1;
-        } else if (x > 0 && y < 0) {
+        } else if (x >= 0 && y < 0) {
             return 4;
-        } else if (x < 0 && y > 0) {
+        } else if (x <= 0 && y > 0) {
             return 2;
-        } else if (x < 0 && y < 0) {
+        } else if (x < 0 && y <= 0) {
             return 3;
         } else {
             return 0; //Suponemos punto Origen
