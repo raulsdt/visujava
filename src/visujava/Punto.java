@@ -205,18 +205,16 @@ public class Punto {
         double difX = pt.x - x;
         double difY = pt.y - y;
 
-        if (difX > Geometria.CERO) {
-            if (difY > Geometria.CERO) {
-                return 1;
-            } else {
-                return 4;
-            }
+        if (difX > 0 && difY >= 0) {
+            return 1;
+        } else if (difX >= 0 && difY < 0) {
+            return 4;
+        } else if (difX <= 0 && difY > 0) {
+            return 2;
+        } else if (difX < 0 && difY <= 0) {
+            return 3;
         } else {
-            if (difY > Geometria.CERO) {
-                return 2;
-            } else {
-                return 3;
-            }
+            return 0; //Suponemos punto Origen
         }
 
     }
@@ -228,20 +226,19 @@ public class Punto {
      * @return Ángulo en radianes
      */
     public float angulo(Punto pt) {
-        double angulo = Math.abs(Math.atan(pt.x / pt.y));
         int cuadrante = cuadrante(pt);
-//        System.out.println("Cuadrante" + cuadrante + "angulo " + angulo);
+        
         switch (cuadrante) {
             case 2:
-                return (float) (Math.PI - angulo);
+                return (float) (Math.PI - Math.abs(Math.atan((pt.x+x) / (pt.y-y))));
 
             case 3:
-                return (float) (Math.PI + angulo);
+                return (float) (Math.PI + Math.abs(Math.atan((pt.x+x) / (pt.y+y))));
 
             case 4:
-                return (float) (2 * Math.PI - angulo);
+                return (float) (2 * Math.PI - Math.abs(Math.atan((pt.x-x) / (pt.y+y))));
             default:
-                return (float) angulo;
+                return (float) Math.abs(Math.atan((pt.x-x) / (pt.y-y)));
         }
     }
     

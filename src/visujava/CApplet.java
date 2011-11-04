@@ -64,33 +64,28 @@ public class CApplet extends java.applet.Applet {
   
   /** Modificar: meter aquí el código de prueba */
   private void pintar(Graphics g) throws Exception {
-     /*PROBANDO PUNTO*/       
-      Punto p1 = new Punto(30,-10);
-//      Punto p2 = new Punto(20,30);
-
+     /*PROBANDO POLIGONO*/       
+      Poligono poli = new Poligono(5, 80);
+      VisuPoligono vpoli = new VisuPoligono(poli);
       
-      VisuPunto vp1 = new VisuPunto(p1);
+//      Punto o = new Punto(40, 10);
+//      Punto p1 = new Punto(60, 20);
+//      Punto p2 = new Punto(20, 70);
+//      Punto p3 = new Punto(10, 50);
+//      
+//      VisuPunto vo = new VisuPunto(o);
+//      VisuPunto vp1 = new VisuPunto(p1);
 //      VisuPunto vp2 = new VisuPunto(p2);
-
-      
-      
-      /*Operaciones*/
-//     System.out.println(p1.angulo(p2));
-//     p2.rotar270();
-//     System.out.println("¿ ENTRE ? " + p3.entre(p1, p2));
-//     p1.mover(40, 30);
-//     System.out.println("CUADRANTES:" +  p1.cuadrante() + p2.cuadrante() + p3.cuadrante()+p4.cuadrante());
-      
-//      System.out.println(p1.compX(p2));
-//      System.out.println(p1.compY(p2));
-      
-      p1.setPolares(20,(float)Math.PI);
-      
+//      VisuPunto vp3 = new VisuPunto(p3)
+              ;
       /** Definimos un array polimorfo */
-      Vista vv[] = new Vista[1];
-      vv[0] =  vp1;
-//      vv[1] =  vp2;
+      Vista vv[] = new Vista[4];
+      vv[0] = vpoli;
 
+      
+//      System.out.println(o.angulo(p1));
+//      System.out.println(o.angulo(p2));
+//      System.out.println(o.angulo(p3));
       
       for (int i = 0; i<1; i++){
           Vista obj = vv[i]; //enganche polimorfo

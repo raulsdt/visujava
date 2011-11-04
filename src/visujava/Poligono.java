@@ -4,8 +4,6 @@ Clase: Poligono.java
 package visujava;
 
 import java.util.*;
-import java.math.*;
-import java.io.*;
 
 /** Representa un Poligono con nVertices Vertices. */
 public class Poligono {
@@ -121,22 +119,28 @@ public class Poligono {
      */
     public Poligono(int num, int semilla) {//Con esta función no va a salir convexo casi nunca - revisar
         //Vamos a introducir los vertices del poligono ya ordenados
-        Vertice vertice = new Vertice();
         Random rnd = new Random(semilla);
-
-        Vertices.add(new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, 1));
-        Vertices.add(new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, 2));
-
-        int i = 3;
-        while (i < num) {
-            vertice = new Vertice(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO), this, i);
-            if (vertice.izquierda(Vertices.get(i - 1), Vertices.get(i - 2))) {
-                Vertices.add(vertice);
-                i++;
-            }
+        
+        //Creamos una serie de puntos en un array
+        ArrayList<Vertice> nube = new ArrayList<Vertice>();
+        
+        for(int i=0;i< num;i++){
+            nube.add(new Vertice(new Punto(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO))));
         }
+        
+        //Ordenamos por grados, teniendo como referencia el (0,-500)
+        Collections.sort(nube,new ComparadorMin());
+        
+        ComparadorGrados.minimo = nube.get(0);
+        
+        System.out.println("MINIMO: " + ComparadorGrados.minimo.x + " " + ComparadorGrados.minimo.y);
+        
+        Collections.sort(nube,new ComparadorGrados());
+        
+        Vertices = (ArrayList<Vertice>) nube.clone();
         nVertices = num;
-    }
+        
+    }    
 
     /**
      * @ see Calcula el baricentro de un triangulo

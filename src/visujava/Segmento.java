@@ -206,29 +206,27 @@ public class Segmento {
      * @return 
      */
     public Punto puntoInterseccion(Segmento se) {
-        if (intersecta(se)) {
-            double m1, m2, c1, c2;
-            double x, y;
-            //Obtenemos las formas implicitas de los segmentos
-            // y = mx+c , siendo "m" la pendiente y "c" el termino independiente
+        //Cambiada por esta dada por Lidia por que va bien en toos
+        //los caso (la anterior fallaba en vertical)
+        double a0, a1, b0, b1, c0, c1, d0, d1;
+	a0 = leebx(); a1 = leeby();
+	b0 = leeax(); b1 = leeay();
+	c0 = se.leebx(); c1 = se.leeby();
+	d0 = se.leeax(); d1 = se.leeay();
+	double denominador = a0 *(d1-c1) + b0*(c1-d1) + d0*(b1-a1) + c0*(a1-b1);
+	if (denominador == Geometria.CERO) return null;
 
-            // 1º Segmento
-            m1 = (b.y - a.y) / (b.x - a.x);
-            c1 = b.y - m1 * b.x;
+	double s = (a0*(d1-c1) + c0*(a1-d1) + d0*(c1-a1)) / denominador;
+	double t = (-1)*(a0*(c1-b1) + b0*(a1-c1) + c0*(b1-a1)) / denominador;
 
-            // 2º Segmento
-            m2 = (se.b.y - se.a.y) / (se.b.x - se.a.x);
-            c2 = se.b.y - m2 * se.b.x;
+	double x = a0 + s*(b0-a0);
+	double y = a1 + s*(b1-a1);
 
-            //Resolvemos el sistema de ecuaciones
-            x = (c1 - c2) / (m2 - m1);
-            y = m1 * x + c1;
-
-            return new Punto(x, y);
-        } else {
-            return null;
-        }
+	if (0.0 <= s && s<= 1.0 && 0.0 <=t  && t<= 1.0) return new Punto(x, y);
+	return null;
+        
     }
+    
 
     /**
      * Intersección impropia de segmentos
@@ -279,8 +277,8 @@ public class Segmento {
      */
     public boolean solapa(Segmento se) {
         //Vemos si son colineales
-        if (a.colineal(b, se.a) || a.colineal(b, se.b)
-                || se.a.colineal(se.b, a) || se.a.colineal(se.b, b)) {
+        if ( (a.colineal(b, se.a) && a.colineal(b, se.b))
+                || (se.a.colineal(se.b, a) && se.a.colineal(se.b, b)) ) {
             if (se.a.entre(a, b) || se.b.entre(a, b)
                     || a.entre(se.a, se.b) || b.entre(se.a, se.b)) {
                 return true; // Se solapan
@@ -301,7 +299,7 @@ public class Segmento {
         //Tienen que solaparse y además estar uno contiene del otro
         if (solapa(se)) {
             //Comprovamos si alguno de los segmentos está contiene del otro
-            if (a.entre(se.a, se.b) && b.entre(se.a, se.b)) {
+            if (a.entre(se.a, se.b) && b.entre(se.a, se.b) || (se.a.entre(a, b) && se.b.entre(a, b))) {
                 return true;
             } else {
                 return false;
@@ -354,10 +352,11 @@ public class Segmento {
      * @return izquierda (-1) | igual (0) | derecha (1)
      */
     public int compX(Segmento se) {
-        if (a.izquierdaSobre(b, se.a) && a.izquierdaSobre(b, se.b)) {
+        //VER--- NO ESTÁ BIEN
+        if (a.izquierdaSobre(b, se.a) && b.izquierdaSobre(b, se.b)) {
             return 1;
         } else {
-            if (a.derechaSobre(b, se.a) && a.derechaSobre(b, se.b)) {
+            if (a.derechaSobre(b, se.a) && b.derechaSobre(b, se.b)) {
                 return -1;
             } else {
                 if (intersecta(se)) {
