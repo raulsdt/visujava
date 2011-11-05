@@ -19,6 +19,7 @@ package visujava;
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -65,9 +66,9 @@ public class CApplet extends java.applet.Applet {
   /** Modificar: meter aquí el código de prueba */
   private void pintar(Graphics g) throws Exception {
      /*PROBANDO POLIGONO*/       
-      Poligono poli = new Poligono(5, 80);
+      Poligono poli = new Poligono(4, 80);
       VisuPoligono vpoli = new VisuPoligono(poli);
-      Poligono poli2 = new Poligono();
+//      Poligono poli2 = new Poligono();
       
 //      Vertice v1 = new Vertice(-20, 10, poli2,0);
 //      Vertice v2 = new Vertice(-10, 40, poli2,1);
@@ -80,14 +81,35 @@ public class CApplet extends java.applet.Applet {
 //      
 //      VisuPoligono vpoli2 = new VisuPoligono(poli2);
 
+      //PROBAMOS LAS RECTAS
+      Recta r1 = new Recta(0,0,40,40);
+//      Recta r2 = new Recta(-30,-30,20,20);
+//      Segmento s1 = new Segmento(-10,0,20,0);
       
-      System.out.println("TANGENTES: " + poli2.esTangente(0, 0, poli));
-      
+      VisuRecta vr1 = new VisuRecta(r1);
+//      VisuRecta vr2 = new VisuRecta(r2);
+//      VisuSegmento vs1 = new VisuSegmento(s1);
+        ArrayList<Punto> inter = new ArrayList<Punto>();
+        inter = r1.intersecta(poli);
+        
+        if(inter == null){
+            System.out.println("NO INTERSECTA");
+        }else{
+            System.out.println("INTERSECTA");
+        }
+        
+    
       /** Definimos un array polimorfo */
       Vista vv[] = new Vista[5];
-      vv[0] = vpoli;      
+      vv[0] = vpoli;
+      vv[1] = vr1;
       
-      for (int i = 0; i<1; i++){
+      for(int i = 0; i< inter.size();i++){
+            vv[i+2] = new VisuPunto(inter.get(i));
+      }
+      
+      
+      for (int i = 0; i<5; i++){
           Vista obj = vv[i]; //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
       }
