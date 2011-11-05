@@ -226,20 +226,7 @@ public class Punto {
      * @return Ángulo en radianes
      */
     public float angulo(Punto pt) {
-        int cuadrante = cuadrante(pt);
-        
-        switch (cuadrante) {
-            case 2:
-                return (float) (Math.PI - Math.abs(Math.atan((pt.x+x) / (pt.y-y))));
-
-            case 3:
-                return (float) (Math.PI + Math.abs(Math.atan((pt.x+x) / (pt.y+y))));
-
-            case 4:
-                return (float) (2 * Math.PI - Math.abs(Math.atan((pt.x-x) / (pt.y+y))));
-            default:
-                return (float) Math.abs(Math.atan((pt.x-x) / (pt.y-y)));
-        }
+        return (float) Math.atan2(pt.y-y, pt.x-x);
     }
     
     /**

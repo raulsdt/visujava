@@ -67,25 +67,25 @@ public class CApplet extends java.applet.Applet {
      /*PROBANDO POLIGONO*/       
       Poligono poli = new Poligono(5, 80);
       VisuPoligono vpoli = new VisuPoligono(poli);
+      Poligono poli2 = new Poligono();
       
-//      Punto o = new Punto(40, 10);
-//      Punto p1 = new Punto(60, 20);
-//      Punto p2 = new Punto(20, 70);
-//      Punto p3 = new Punto(10, 50);
+//      Vertice v1 = new Vertice(-20, 10, poli2,0);
+//      Vertice v2 = new Vertice(-10, 40, poli2,1);
+//      Vertice v3 = new Vertice(-50, 60, poli2,2);
+//      Vertice v4 = new Vertice(-30, 20, poli2,3);
+//      poli2.anade(v1);
+//      poli2.anade(v2);
+//      poli2.anade(v3);
+//      poli2.anade(v4);
 //      
-//      VisuPunto vo = new VisuPunto(o);
-//      VisuPunto vp1 = new VisuPunto(p1);
-//      VisuPunto vp2 = new VisuPunto(p2);
-//      VisuPunto vp3 = new VisuPunto(p3)
-              ;
-      /** Definimos un array polimorfo */
-      Vista vv[] = new Vista[4];
-      vv[0] = vpoli;
+//      VisuPoligono vpoli2 = new VisuPoligono(poli2);
 
       
-//      System.out.println(o.angulo(p1));
-//      System.out.println(o.angulo(p2));
-//      System.out.println(o.angulo(p3));
+      System.out.println("TANGENTES: " + poli2.esTangente(0, 0, poli));
+      
+      /** Definimos un array polimorfo */
+      Vista vv[] = new Vista[5];
+      vv[0] = vpoli;      
       
       for (int i = 0; i<1; i++){
           Vista obj = vv[i]; //enganche polimorfo

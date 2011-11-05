@@ -133,45 +133,19 @@ public class Poligono {
         
         ComparadorGrados.minimo = nube.get(0);
         
-        System.out.println("MINIMO: " + ComparadorGrados.minimo.x + " " + ComparadorGrados.minimo.y);
-        
+        //Ordenamos los puntos por ángulo
         Collections.sort(nube,new ComparadorGrados());
         
-        Vertices = (ArrayList<Vertice>) nube.clone();
+        //Alamcenamos los puntos
+        Vertices = new ArrayList<Vertice>();
         nVertices = num;
+        for(int i = 0;i < num;i++){
+            Vertices.add(new Vertice(nube.get(i).leex(), nube.get(i).leey(), this, i));
+        }
+        
         
     }    
 
-    /**
-     * @ see Calcula el baricentro de un triangulo
-     * @param v1 Vertice 1
-     * @param v2 Vertice 2
-     * @param v3 Vertice 3
-     * @return Baricentro
-     */
-    private Punto baricentroTriangulo(Punto v1, Punto v2, Punto v3) {
-        return new Punto((v1.x + v2.x + v3.x) / 3, (v1.y + v2.y + v3.y) / 3);
-
-    }
-
-    /**
-     * Centroide del poligono
-     * @return Punto centroide del poligono
-     */
-    /* public Punto centroide() {
-    //Funcionaría en el caso de los vertices estuvieran ordenador a priori
-    double cx = 0, cy = 0;
-    for (int i = 0; i < nVertices - 1; i++) {
-    cx += ((lee(i).x + lee(i + 1).x) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
-    cy += ((lee(i).y + lee(i + 1).y) * ((lee(i).x * lee(i + 1).y) - (lee(i + 1).x * lee(i).y)));
-    }
-    cx += ((lee(nVertices - 1).x + lee(0).x) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
-    cy += ((lee(nVertices - 1).y + lee(0).y) * ((lee(nVertices - 1).x * lee(0).y) - (lee(0).x * lee(nVertices - 1).y)));
-    cx /= (6 * areaPoligono());
-    cy /= (6 * areaPoligono());
-    
-    return new Punto(cx,cy);
-    }*/
     /**
      * Calcula centroide (medias de X, e Y)
      * @return el punto del centroide
@@ -195,9 +169,9 @@ public class Poligono {
         double area = 0;
 
         for (int i = 0; i < nVertices; i++) {
-            area += p.areaTriangulo2(lee(i), lee(i + 1)) / 2;
+            area += p.areaTriangulo2(lee(i), lee((i + 1)%nVertices)) / 2;
         }
-
+        
         return area;
     }
 
@@ -205,7 +179,7 @@ public class Poligono {
         Segmento diagonal = new Segmento(lee(i), lee(j));
 
         for (int h = 0; h < nVertices; h++) {
-            if (diagonal.intersecta(new Segmento(lee(h), lee(h++)))) {
+            if (diagonal.intersecta(new Segmento(lee(h), lee(h % nVertices).siguiente()))) {
                 return false;
             }
         }
@@ -220,15 +194,15 @@ public class Poligono {
      */
     public boolean diagonalInterna(int i, int j) {
         if (convexo()) {
-            if (lee((i - 1) % nVertices).izquierda(lee(i % nVertices), lee(j % nVertices))
-                    && lee((i + 1) % nVertices).izquierda(lee(i % nVertices), lee(j % nVertices))) {
+            if (lee(i).anterior().izquierda(lee(i % nVertices), lee(j % nVertices))
+                    && lee(i).siguiente().derecha(lee(i % nVertices), lee(j % nVertices))) {
                 return intersectaDiagonal(i, j);
             } else {
                 return false;
             }
         } else { //Concavo
-            if (!(lee((i + 1) % nVertices).izquierdaSobre(lee(i % nVertices), lee(j % nVertices))
-                    && lee((i - 1) % nVertices).izquierdaSobre(lee(j % nVertices), lee(i % nVertices)))) {
+            if (!(lee(i).siguiente().izquierdaSobre(lee(i % nVertices), lee(j % nVertices))
+                    && lee(i).anterior().izquierdaSobre(lee(j % nVertices), lee(i % nVertices)))) {
                 return intersectaDiagonal(i, j);
             } else {
                 return false;
@@ -236,25 +210,55 @@ public class Poligono {
         }
     }
 
-    private boolean tangente(Vertice v, Punto q) {
-        return q.izquierdaSobre(v.anterior(), v) ^ q.izquierdaSobre(v, v.siguiente());
+    private boolean tangente(Vertice v, Vertice q) {
+        return q.lee().izquierdaSobre(v.anterior(), v) ^ q.lee().izquierdaSobre(v, v.siguiente());
     }
 
     /**
      * Dice si la recta que pasa por los dos vértices es tangente a los polígonos
      * @param v1 (this)
-     * @param v2
-     * @param p
+     * @param v2 Posición del vertice que pertenece el poligono p
+     * @param p Poligo que junto a this se va a comprobar si los vertices son tangentes
      * @return True si es tangente o False si no lo es
      */
     public boolean esTangente(int posV1, int posV2, Poligono p) {
-        if (tangente(lee(posV1 % nVertices), p.lee(posV2 % p.nVertices))
-                && tangente(p.lee(posV2 % p.nVertices), lee(posV1 % nVertices))) {
+        ArrayList<Vertice> A = (ArrayList<Vertice>) this.Vertices.clone();
+        ArrayList<Vertice> B = (ArrayList<Vertice>) p.Vertices.clone();
+        
+        //Ordenamos de izquierda a derecha los dos poligonos
+        Collections.sort(A,new ComparadorVerticeIzqDer());
+        Collections.sort(B,new ComparadorVerticeIzqDer());
+        
+        int a = A.get(0).posicion; // Cogemos el mas a la derecha
+        int b = B.get(B.size()-1).posicion; //Cogemos el más a la izquierda
+        
+        int aa = -2, bb = -2; //No pude coincidir con a y b
+        do{
+            aa = a;
+            bb = b;
+            while(!this.tangente(this.lee(a),p.lee(b))){
+                a = (a-1 + this.nVertices) % nVertices;
+            }
+            while(! p.tangente(this.lee(a),p.lee(b))){
+                b = (b+1) % p.nVertices;
+            }
+        }while(aa == a && bb == b);
+        
+        if(a == posV1 && b == posV2){
             return true;
-        } else {
+        }else{
             return false;
         }
+        
     }
+//    public boolean esTangente(int posV1, int posV2, Poligono p) {
+//        if (tangente(lee(posV1 % nVertices), p.lee(posV2 % p.nVertices))
+//                && tangente(p.lee(posV2 % p.nVertices), lee(posV1 % nVertices))) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     /**
      * Polígono convexo

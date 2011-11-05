@@ -12,18 +12,11 @@ public class ComparadorGrados implements Comparator<Vertice>{
     public static Punto minimo;
     
     @Override
-     public int compare(Vertice a, Vertice b){        
-        Punto min = new Punto(0, 0);
-        System.out.println("A: "+"puntos("+a.x+" , "+ a.y +" ) " + min.angulo(a.lee()));
-        System.out.println("B: " +"puntos("+b.x+" , "+ b.y +" ) " + min.angulo(b.lee()));
-        System.out.println("-----------------------");
-        
-        if(min.angulo(a.lee()) < min.angulo(b.lee())){
-            System.out.println("MIN"); 
+     public int compare(Vertice a, Vertice b){                
+        if(minimo.angulo(a.lee()) < minimo.angulo(b.lee())){
             return -1; 
          }else{
-             if(min.angulo(a.lee()) > min.angulo(b.lee())){
-                 System.out.println("MAX");
+             if(minimo.angulo(a.lee()) > minimo.angulo(b.lee())){
                  return 1;
              }else{
                  return 0;

@@ -8,6 +8,7 @@ import java.util.*;
 import java.math.*;
 import java.io.*;
 
+
 /* Representa un v�rtice perteneciente a un pol�gono. */
 public class Vertice extends Punto {
     /* Posici�n que ocupa dentro del pol�gono. */
@@ -111,6 +112,7 @@ public class Vertice extends Punto {
      * Vertice siguiente del polígono
      * @return Devuelve una referencia al vértice siguiente de éste en el polígono
      */
+    
     public Vertice siguiente(){
         return polig.lee((posicion + 1) % polig.nVertices);
     }
@@ -120,7 +122,13 @@ public class Vertice extends Punto {
      * @return Devuelve una referencia al vertice anterior a éste en el polígono
      */
     public Vertice anterior(){
-        return polig.lee((posicion - 1) % polig.nVertices);
+        int pos = (posicion-1);
+        if(pos < 0){
+            pos += polig.nVertices;
+        }else{
+            pos = pos % polig.nVertices;
+        }
+        return polig.lee(pos);
     }
     
     /**
@@ -128,6 +136,7 @@ public class Vertice extends Punto {
      * @return Devuelve True si es convexo o False si no lo es
      */
     public boolean convexo(){
-        return anterior().izquierda(this, siguiente());
+        
+        return anterior().lee().izquierda(this.lee(), siguiente().lee());
     }
 }
