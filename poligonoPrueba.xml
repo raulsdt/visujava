@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xml>
+  <POLIGONO>
+    <PUNTO>
+      <X>53.0</X>
+      <Y>33.0</Y>
+    </PUNTO>
+    <PUNTO>
+      <X>86.0</X>
+      <Y>47.0</Y>
+    </PUNTO>
+    <PUNTO>
+      <X>30.0</X>
+      <Y>82.0</Y>
+    </PUNTO>
+    <PUNTO>
+      <X>38.0</X>
+      <Y>38.0</Y>
+    </PUNTO>
+  </POLIGONO>
+</xml>

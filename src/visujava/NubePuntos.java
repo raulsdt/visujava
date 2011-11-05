@@ -4,7 +4,15 @@
  */
 package visujava;
 
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
 
 /**
  *
@@ -16,10 +24,12 @@ public class NubePuntos {
     protected ArrayList<Punto> nube;
 
     /**
-     * Construye una pube de punto aleatoria
-     * @param n
+     * Controctor de la clase Nube, construye una nube de puntos aleatoria
+     * @param n Número de puntos
+     * @param semilla Semilla de inicialización aletoria
      */
     public NubePuntos(int n, int semilla) {
+        nube = new ArrayList<Punto>();
         Random rnd = new Random(semilla);
 
         for (int i = 0; i < n; i++) {
@@ -29,36 +39,94 @@ public class NubePuntos {
 
     }
     
+    /**
+     * Constructor de la clase Nube, construye una nube a partir de otra
+     * @param n Nube de puntos
+     */
     public NubePuntos(NubePuntos n){
-        
-        for(int i=0;i<n.num;i++){
-            nube.add(n.getPunto(i));
-        }
-        
+        nube = (ArrayList<Punto>) n.nube.clone();
+        num = n.num;
     }
     
     /**
-     * Construye una pube de puntos desde un fichero
-     * @param rutaFichero 
+     * Constructor de la clase Nube, construye una nube de puntos desde un fichero
+     * @param rutaFichero Ruta donde se encuentra el fichero de puntos
      */
     public NubePuntos(String rutaFichero) {
+        
     }
 
     /**
      * Guarda un polígono en un fichero
-     * @param p
-     * @param ruta 
+     * @param p Poligono que se quiere guardar
+     * @param ruta Ruta del fichero que se desea guardar
      */
     public void salvar(Poligono p, String ruta) {
+        /*Vamos a crearlo en XML*/
+        
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try{
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMImplementation implementation = builder.getDOMImplementation();
+            Document document = implementation.createDocument(null, "xml", null);
+            
+            //VERSION 1.0
+            document.setXmlVersion("1.0"); // asignamos la version de nuestro XML
+            
+            //RAIZ
+            Element raiz = document.createElement("POLIGONO");  // creamos el elemento raiz
+            document.getDocumentElement().appendChild(raiz);  //pegamos la raiz al documento
+            
+            for(int i = 0; i < p.numeroVertices(); i++){
+                //Creamos elemento PUNTO
+                Element elemento = document.createElement("PUNTO"); //creamos un nuevo punto
+                
+                //Creamos usus hijos (COORDENADAS)
+                Element etiqX = document.createElement("X"); //creamos la coordenada X
+                Element etiqY = document.createElement("Y"); //creamos la coordenada Y
+
+                //Ponemos valos a las coordenadas
+                Text coordX = document.createTextNode(Double.toString(p.lee(i).leex())); //Ingresamos la info (COORDENADA X)
+                Text coordY = document.createTextNode(Double.toString(p.lee(i).leey())); //Ingresamos la info (COORDENADA X)
+                
+                raiz.appendChild(elemento); //pegamos el elemento PUNTO a la RAIZ <POLIGONO>
+                
+                //Hacemos las coordenadas hijas de PUNTO
+                elemento.appendChild(etiqX);
+                elemento.appendChild(etiqY);
+                
+                //Ponemos sus valores a las etiquetas X e Y
+                etiqX.appendChild(coordX);
+                etiqY.appendChild(coordY);
+                
+            }
+            
+            Source source = new DOMSource(document);
+            Result result = new StreamResult(new java.io.File(ruta)); //nombre del archivo
+//          Result console= new StreamResult(System.out); //Para mostrar por pantalla
+            
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            //Indentamos el XML
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            transformer.transform(source, result);
+//            transformer.transform(source, console); // Paramostrar por pantalla
+            
+            System.out.println("Archivo xml GENERADO!");
+
+        }catch(Exception e){
+            System.err.println("Error al crear XML: " + e);
+        }
+        
     }
 
     /**
      * Punto dada una posición
      * @param Posicion del punto iniciando en cero
-     * @return Punto de la posición dada
+     * @return Punto de la posición dada o null si no existe el punto
      */
     public Punto getPunto(int pos) {
-        if (pos < num - 1 && pos >= 0) {
+        if (pos >= 0 && pos < num - 1) {
             return nube.get(pos);
         }
         return null;
@@ -84,7 +152,7 @@ public class NubePuntos {
 
     /**
      * Punto central de la nube
-     * @return 
+     * @return El punto central o de masas
      */
     public Punto puntoCentral() {
         double sumX=0,sumY=0;
@@ -94,7 +162,11 @@ public class NubePuntos {
         }
         return new Punto(sumX/num, sumY/num);
     }
-
+    
+    /**
+     * Punto centroide de una nube de puntos
+     * @return El punto centroide de la nube de puntos
+     */
     public Punto puntoCentroide() {
         //IMPLEMENTAR
         return null;

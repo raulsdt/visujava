@@ -17,10 +17,7 @@ package visujava;
 
 
 import java.awt.*;
-import java.awt.event.*;
-import java.applet.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *
@@ -68,51 +65,18 @@ public class CApplet extends java.applet.Applet {
      /*PROBANDO POLIGONO*/       
       Poligono poli = new Poligono(4, 80);
       VisuPoligono vpoli = new VisuPoligono(poli);
-//      Poligono poli2 = new Poligono();
       
-//      Vertice v1 = new Vertice(-20, 10, poli2,0);
-//      Vertice v2 = new Vertice(-10, 40, poli2,1);
-//      Vertice v3 = new Vertice(-50, 60, poli2,2);
-//      Vertice v4 = new Vertice(-30, 20, poli2,3);
-//      poli2.anade(v1);
-//      poli2.anade(v2);
-//      poli2.anade(v3);
-//      poli2.anade(v4);
-//      
-//      VisuPoligono vpoli2 = new VisuPoligono(poli2);
-
-//      Recta r1 = new Recta(0,0,40,40);
-//      VisuRecta vr1 = new VisuRecta(r1);
-      
-      
-      //PROBAMOS RAYOS
-      Rayo ry1 = new Rayo(0,0,20,30);      
-      VisuRayo vry1 = new VisuRayo(ry1);
-      
-      
-      //OPERACIONES
-      ArrayList<Punto> p  = new ArrayList<Punto>();
-      
-      p =  ry1.intersecta(poli);
-      
-      if(p == null){
-          System.out.println("NO INTERSECTA");
-      }else{
-          System.out.println("INTERSECTA");
-      }
-     
+      //PROBANDO NUBE-PUNTOS
+      NubePuntos nube = new NubePuntos(5, 40);
+      nube.salvar(poli, "poligonoPrueba.xml");
 //      
       /** Definimos un array polimorfo */
       Vista vv[] = new Vista[5];
-      vv[0] = vry1;
-      vv[1] = vpoli;
+      vv[0] = vpoli;
       
-      for(int i = 0; i < p.size();i++){
-          vv[i+2] = new VisuPunto(p.get(i));
-      }
 
       
-      for (int i = 0; i<4; i++){
+      for (int i = 0; i<1; i++){
           Vista obj = vv[i]; //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
       }
