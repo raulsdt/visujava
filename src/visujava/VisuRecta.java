@@ -5,9 +5,6 @@
 package visujava;
 
 import java.awt.*;
-import java.io.IOException;
-import java.nio.CharBuffer;
-import visujava.*;
 /**
  *
  * @author raul
@@ -33,7 +30,7 @@ public class VisuRecta extends Vista{
         
         Punto pSup,pInf;
         
-        if(new Segmento(r.leeA(),r.leeB()).esHorizontal()){
+        if(new Segmento(r.leeA(),r.leeB()).esHorizontal()){ //Si es horizontal lo tratamos con las rectas verticales
             Recta verticalIzq = new Recta(Geometria.RANGO * (-2),10,Geometria.RANGO * (-2),20);
             Recta verticalDer = new Recta(Geometria.RANGO * 2, 10, Geometria.RANGO * 2,20);
             pSup = r.intersecta(verticalIzq);

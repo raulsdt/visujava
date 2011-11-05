@@ -168,7 +168,7 @@ public class Punto {
 
     /** Indica si los tres Puntos son colineales. */
     public boolean colineal(Punto a, Punto b) {
-        return areaTriangulo2(a, b) == 0.0;
+        return Math.abs(areaTriangulo2(a, b)) <= Geometria.CERO;
     }
 
     /** Indica si el Punto est� a la izquierda o es colineal al segmento 
@@ -201,7 +201,13 @@ public class Punto {
     }
 
     //******************************* METODOS CREADOS *************************/
-    private int cuadrante(Punto pt) {
+    
+    /**
+     * Cuadrante que ocupa en punto pt tomando el punto (this) como origen
+     * @param pt Punto del cual se desea saber el cuadrante
+     * @return El cuadrante que ocupa en punto
+     */
+    public int cuadrante(Punto pt) {
         double difX = pt.x - x;
         double difY = pt.y - y;
 

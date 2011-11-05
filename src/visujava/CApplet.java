@@ -81,35 +81,38 @@ public class CApplet extends java.applet.Applet {
 //      
 //      VisuPoligono vpoli2 = new VisuPoligono(poli2);
 
-      //PROBAMOS LAS RECTAS
-      Recta r1 = new Recta(0,0,40,40);
-//      Recta r2 = new Recta(-30,-30,20,20);
-//      Segmento s1 = new Segmento(-10,0,20,0);
+//      Recta r1 = new Recta(0,0,40,40);
+//      VisuRecta vr1 = new VisuRecta(r1);
       
-      VisuRecta vr1 = new VisuRecta(r1);
-//      VisuRecta vr2 = new VisuRecta(r2);
-//      VisuSegmento vs1 = new VisuSegmento(s1);
-        ArrayList<Punto> inter = new ArrayList<Punto>();
-        inter = r1.intersecta(poli);
-        
-        if(inter == null){
-            System.out.println("NO INTERSECTA");
-        }else{
-            System.out.println("INTERSECTA");
-        }
-        
-    
+      
+      //PROBAMOS RAYOS
+      Rayo ry1 = new Rayo(0,0,20,30);      
+      VisuRayo vry1 = new VisuRayo(ry1);
+      
+      
+      //OPERACIONES
+      ArrayList<Punto> p  = new ArrayList<Punto>();
+      
+      p =  ry1.intersecta(poli);
+      
+      if(p == null){
+          System.out.println("NO INTERSECTA");
+      }else{
+          System.out.println("INTERSECTA");
+      }
+     
+//      
       /** Definimos un array polimorfo */
       Vista vv[] = new Vista[5];
-      vv[0] = vpoli;
-      vv[1] = vr1;
+      vv[0] = vry1;
+      vv[1] = vpoli;
       
-      for(int i = 0; i< inter.size();i++){
-            vv[i+2] = new VisuPunto(inter.get(i));
+      for(int i = 0; i < p.size();i++){
+          vv[i+2] = new VisuPunto(p.get(i));
       }
+
       
-      
-      for (int i = 0; i<5; i++){
+      for (int i = 0; i<4; i++){
           Vista obj = vv[i]; //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
       }
