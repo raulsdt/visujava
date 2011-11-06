@@ -168,7 +168,7 @@ public class Punto {
 
     /** Indica si los tres Puntos son colineales. */
     public boolean colineal(Punto a, Punto b) {
-        return Math.abs(areaTriangulo2(a, b)) <= Geometria.CERO;
+        return 1-Math.abs(areaTriangulo2(a, b)) > 1- Geometria.CERO;
     }
 
     /** Indica si el Punto est� a la izquierda o es colineal al segmento 

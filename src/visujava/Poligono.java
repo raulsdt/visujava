@@ -272,14 +272,106 @@ public class Poligono {
         }
         return true;
     }
+    
+    
+
+     public boolean intersecta(Segmento s) {
+        for (int i = 0; i < nVertices ; i++) {
+            if (new Segmento(lee(i), lee(((i + 1)%nVertices))).intersecta(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Intersección entre poligonos convexos
      * @param p
      * @return El poligono intersección de los dos polígonos
      */
-    public Poligono intersecta(Poligono p) {
-        return null;
+    public Poligono intersecta(Poligono p) { //Intersecta devolviendo unicamente un poligono
+        ArrayList<Vertice> nube = new ArrayList<Vertice>();
+        Poligono poli = new Poligono();
+        int l, s = 0;
+        int valori = 0, valorj = 0;
+        boolean recuerda = false, recuerda2 = false,intersecta=false;
+        Vertice v = new Vertice();
+        Vertice intersecta1 = new Vertice();
+        Vertice intersecta2 = new Vertice();
+
+        for (int i = 0; i < p.nVertices ; i++) {
+            for (int j = 0; j < nVertices ; j++) {
+                if (new Segmento(p.lee(i), p.lee(((i + 1)%p.nVertices))).intersecta(new Segmento(lee(j), lee(((j + 1)%nVertices))))) {
+                    if (!recuerda) {
+                        intersecta1 = new Vertice(new Segmento(p.lee(i), p.lee(((i + 1)%p.nVertices))).puntoInterseccion(new Segmento(lee(j), lee(((j + 1)%nVertices)))));
+                        valori = i;
+                        valorj = j;
+                    } else {
+                        intersecta2 = new Vertice(new Segmento(p.lee(i), p.lee(((i + 1)%p.nVertices))).puntoInterseccion(new Segmento(lee(j), lee(((j + 1)%nVertices)))));
+                        intersecta=true;
+                        break;
+                    }
+
+                    recuerda = true;
+                }
+            }
+        }
+        if (!intersecta) {
+            return null;
+        }
+
+        nube.add(intersecta1);
+
+
+        if (intersecta1.colineal(intersecta2, p.lee(valori))) {
+            do {
+
+                valorj = (valorj + 1) % nVertices;
+                nube.add(lee(valorj));
+            } while (!intersecta(new Segmento(lee(((valorj) % nVertices)), lee(((valorj + 1) % nVertices)))));
+            nube.add(intersecta2);
+            return new Poligono(nube, nube.size());
+        } else if (intersecta1.colineal(intersecta2, lee(valorj))) {
+            do {
+
+                valori = (valori + 1) % p.nVertices;
+                nube.add(p.lee(valori));
+            } while (!intersecta(new Segmento(p.lee(((valori) % p.nVertices)), p.lee((valori + 1) % p.nVertices))));
+            nube.add(intersecta2);
+            return new Poligono(nube, nube.size());
+
+        } else {
+            int veces=0;
+            valori = (((valori + 1) % p.nVertices));
+            while (!intersecta(new Segmento(p.lee(((valori ) % p.nVertices)), p.lee(((valori + 1) % p.nVertices))))) {
+                
+                nube.add(p.lee(((valori)%p.nVertices)));
+                valori = (((valori + 1) % p.nVertices));
+                veces++;
+            }
+            if(veces==1) nube.add(p.lee(((valori )%p.nVertices)));
+
+            while (!intersecta2.colineal((lee((valorj + 1) % nVertices)), lee(((valorj + 2) % nVertices)))) {
+                valorj = ((((valorj + 1) % nVertices)));
+                
+            }
+            
+            do{
+                valorj = ((((valorj + 1) % nVertices)));
+                nube.add(lee(((valorj + 1)%nVertices)));
+                
+            }while(!p.intersecta(new Segmento(lee(((valorj+1) % nVertices)), lee((valorj + 2) % nVertices))));
+            nube.add(lee(((valorj + 1)%nVertices)));
+            nube.add(intersecta2);
+            Collections.sort(nube, new ComparadorMin());
+            ComparadorGrados.minimo = nube.get(0);
+            //Ordenamos los puntos por ángulo
+            Collections.sort(nube, new ComparadorGrados());
+
+            return new Poligono(nube, nube.size());
+        }
+
+
     }
     /**
      * Determina si un punto está contiene del polígono

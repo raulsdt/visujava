@@ -67,29 +67,38 @@ public class CApplet extends java.applet.Applet {
 //      VisuPoligono vpoli = new VisuPoligono(poli);
       
       //PROBANDO NUBE-PUNTOS
-      NubePuntos nube = new NubePuntos(5,50);
-      VisuNube vn = new VisuNube(nube);
-      nube.out();
+       Poligono poli = new Poligono(5, 80);
+      VisuPoligono vpoli = new VisuPoligono(poli);
+      Poligono poli2 = new Poligono();
       
-      //CajaEnvolvente
-      ArrayList<Integer> pos = new ArrayList<Integer>();
-      pos = nube.ordenaYindice();
+      Vertice v1 = new Vertice(-20, 10, poli2,0);
+      Vertice v2 = new Vertice(50, 40, poli2,1);
+      Vertice v3 = new Vertice(50, 60, poli2,2);
+      Vertice v4 = new Vertice(-50, 60, poli2,3);
+      Vertice v5 = new Vertice(-30, 20, poli2,4);
+      poli2.anade(v1);
+      poli2.anade(v2);
+      poli2.anade(v3);
+      poli2.anade(v4);
+      poli2.anade(v5);
       
-      for(int i= 0; i< pos.size();i++){
-          System.out.print(pos.get(i) + "  ");
-      }
-    
-     
+      VisuPoligono vpoli2 = new VisuPoligono(poli2);
       
+      Poligono poliIntersecta = new Poligono();
+      poliIntersecta = poli.intersecta(poli2);
+      //System.out.println("TANGENTES: " + poli2.esTangente(0, 0, poli));
+      VisuPoligono vpoliInter = new VisuPoligono(poliIntersecta);
       /** Definimos un array polimorfo */
-      Vista vv[] = new Vista[5];
-      vv[0] = vn;
-//      vv[1] = vpc;
+      Vista vv[] = new Vista[3];
+      vv[0] = vpoli;
+      vv[1] = vpoliInter;
       
-      for (int i = 0; i<1; i++){
+      for (int i = 0; i<2; i++){
           Vista obj = vv[i]; //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
       }
+      
+ 
       
  
   }
