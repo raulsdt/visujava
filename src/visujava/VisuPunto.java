@@ -9,9 +9,7 @@
  */
 
 package visujava;
-
 import java.awt.*;
-import visujava.*;
 
 /**
  *

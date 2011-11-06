@@ -63,18 +63,28 @@ public class CApplet extends java.applet.Applet {
   /** Modificar: meter aquí el código de prueba */
   private void pintar(Graphics g) throws Exception {
      /*PROBANDO POLIGONO*/       
-      Poligono poli = new Poligono(4, 80);
-      VisuPoligono vpoli = new VisuPoligono(poli);
+//      Poligono poli = new Poligono(4, 80);
+//      VisuPoligono vpoli = new VisuPoligono(poli);
       
       //PROBANDO NUBE-PUNTOS
-      NubePuntos nube = new NubePuntos(5, 40);
-      nube.salvar(poli, "poligonoPrueba.xml");
-//      
+      NubePuntos nube = new NubePuntos(5,50);
+      VisuNube vn = new VisuNube(nube);
+      nube.out();
+      
+      //CajaEnvolvente
+      ArrayList<Integer> pos = new ArrayList<Integer>();
+      pos = nube.ordenaYindice();
+      
+      for(int i= 0; i< pos.size();i++){
+          System.out.print(pos.get(i) + "  ");
+      }
+    
+     
+      
       /** Definimos un array polimorfo */
       Vista vv[] = new Vista[5];
-      vv[0] = vpoli;
-      
-
+      vv[0] = vn;
+//      vv[1] = vpc;
       
       for (int i = 0; i<1; i++){
           Vista obj = vv[i]; //enganche polimorfo

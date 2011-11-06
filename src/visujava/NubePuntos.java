@@ -4,9 +4,7 @@
  */
 package visujava;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.File;
 import java.util.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
@@ -49,11 +47,49 @@ public class NubePuntos {
     }
     
     /**
-     * Constructor de la clase Nube, construye una nube de puntos desde un fichero
+     * Función ayxiliar para leer los elementos de un XML
+     * @param sTag Nombre del nodo que se desea extraer la información
+     * @param eElement Nodo
+     * @return El valor de la etiqueta
+     */
+    private String getTagValue(String sTag, Element eElement){
+	  NodeList nlList= eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+	  Node nValue = (Node) nlList.item(0);
+
+	  return nValue.getNodeValue();
+    }
+    
+    /**
+     * Constructor de la clase Nube, construye una nube de puntos desde un fichero XML
      * @param rutaFichero Ruta donde se encuentra el fichero de puntos
      */
     public NubePuntos(String rutaFichero) {
-        
+        nube = new ArrayList<Punto>();
+                
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(new File(rutaFichero));
+            doc.getDocumentElement().normalize();
+
+            NodeList listaPuntos = doc.getElementsByTagName("PUNTO");
+            
+            //Guaradamos el número de puntos que hay en el fichero
+            num = listaPuntos.getLength();
+            
+            for (int i = 0; i < listaPuntos.getLength(); i ++) {
+                Node punto = listaPuntos.item(i);
+
+                if (punto.getNodeType() == Node.ELEMENT_NODE) { //Si es Elemento (Contiene los datos)
+                    Element elemento = (Element) punto;
+                    
+                    //Formamos la nube guardando los puntos
+                    nube.add(new Punto(Double.parseDouble(getTagValue("X", elemento)),Double.parseDouble(getTagValue("Y", elemento)))); 
+                }
+            }
+        }catch (Exception e) {
+            System.out.println("Error al leer XML: " + e.getMessage());
+        }
     }
 
     /**
@@ -126,7 +162,7 @@ public class NubePuntos {
      * @return Punto de la posición dada o null si no existe el punto
      */
     public Punto getPunto(int pos) {
-        if (pos >= 0 && pos < num - 1) {
+        if (pos >= 0 && pos < num) {
             return nube.get(pos);
         }
         return null;
@@ -140,6 +176,10 @@ public class NubePuntos {
         NubePuntos nubeX = new NubePuntos(ordenaXnube());
         NubePuntos nubeY = new NubePuntos(ordenaYnube());
         ArrayList<Vertice> Vertices = new ArrayList<Vertice>();
+        
+//        System.out.print("PUNTOS MAYOR Y MENOR NUBE X: " + nubeX.nube.size());
+//       nubeX.getPunto(0).out();
+//       nubeX.getPunto(8).out();
         
         //Metemos los vertices del cuadrilatero en sentido antihorario
         Vertices.add(new Vertice(new Punto(nubeX.getPunto(0).leex(), nubeY.getPunto(0).leey())));
@@ -157,8 +197,8 @@ public class NubePuntos {
     public Punto puntoCentral() {
         double sumX=0,sumY=0;
         for(int i=0;i<num;i++){
-            sumX += nube.get(i).leex();
-            sumY += nube.get(i).leey();
+            sumX += getPunto(i).leex();
+            sumY += getPunto(i).leey();
         }
         return new Punto(sumX/num, sumY/num);
     }
@@ -185,7 +225,7 @@ public class NubePuntos {
      */
     public NubePuntos ordenaXnube() {
         NubePuntos n = new NubePuntos(this);
-        
+
         Collections.sort(n.nube, new ComparadorIzqDer());
         
         return n;
@@ -219,7 +259,11 @@ public class NubePuntos {
     public NubePuntos ordenaYnube() {
         NubePuntos n = new NubePuntos(this);
         
-        Collections.sort(nube, new ComparadorArrAbaj());
+        Collections.sort(n.nube, new ComparadorArrAbaj());
+        
+        for(int i = 0; i< n.num;i++){
+            n.getPunto(i).out();
+        }
         
         return n;
     }
@@ -236,5 +280,11 @@ public class NubePuntos {
             posiciones.add(nube.indexOf(nubelo.getPunto(i)));
         }
         return posiciones;
+    }
+    
+    public void out(){
+        for(int i = 0; i< num;i++){
+            getPunto(i).out();
+        }
     }
 }
