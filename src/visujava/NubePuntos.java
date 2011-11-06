@@ -207,8 +207,26 @@ public class NubePuntos {
      * @return El punto centroide de la nube de puntos
      */
     public Punto puntoCentroide() {
-        //IMPLEMENTAR
-        return null;
+        ArrayList<Integer> totales = new ArrayList<Integer>();
+
+        int suma=0;
+        for(int i=0;i< num;i++){
+            suma=0;
+            for(int j=0;j<num;j++){
+                suma+=nube.get(i).distancia(nube.get(j));
+            }
+            totales.add(suma);
+        }
+        ArrayList<Integer> totalesAux = new ArrayList<Integer>(totales);
+        Collections.sort(totales);
+        int pos=-1;
+        for(int r=0;r<totalesAux.size();r++){
+            if(totalesAux.get(r).equals(totales.get(0))){
+              pos = r;
+              break;
+            }
+        }
+        return nube.get(pos);
     }
 
     /**

@@ -224,44 +224,18 @@ public class Poligono {
      * @param p Poligo que junto a this se va a comprobar si los vertices son tangentes
      * @return True si es tangente o False si no lo es
      */
-    public boolean esTangente(int posV1, int posV2, Poligono p) {
-        ArrayList<Vertice> A = (ArrayList<Vertice>) this.Vertices.clone();
-        ArrayList<Vertice> B = (ArrayList<Vertice>) p.Vertices.clone();
+       public boolean esTangente(int posV1, int posV2, Poligono p) {
+
         
-        //Ordenamos de izquierda a derecha los dos poligonos
-        Collections.sort(A,new ComparadorVerticeIzqDer());
-        Collections.sort(B,new ComparadorVerticeIzqDer());
-        
-        int a = A.get(0).posicion; // Cogemos el mas a la derecha
-        int b = B.get(B.size()-1).posicion; //Cogemos el más a la izquierda
-        
-        int aa = -2, bb = -2; //No pude coincidir con a y b
-        do{
-            aa = a;
-            bb = b;
-            while(!this.tangente(this.lee(a),p.lee(b))){
-                a = (a-1 + this.nVertices) % nVertices;
+        if(this.tangente(this.lee(posV1),p.lee(posV2))){
+            if(p.tangente(this.lee(posV1),p.lee(posV2))){
+                return true;
             }
-            while(! p.tangente(this.lee(a),p.lee(b))){
-                b = (b+1) % p.nVertices;
-            }
-        }while(aa == a && bb == b);
-        
-        if(a == posV1 && b == posV2){
-            return true;
-        }else{
-            return false;
         }
+        return false;
         
     }
-//    public boolean esTangente(int posV1, int posV2, Poligono p) {
-//        if (tangente(lee(posV1 % nVertices), p.lee(posV2 % p.nVertices))
-//                && tangente(p.lee(posV2 % p.nVertices), lee(posV1 % nVertices))) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+
 
     /**
      * Polígono convexo

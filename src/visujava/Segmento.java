@@ -6,6 +6,9 @@
  */
 package visujava;
 
+import java.util.*;
+import java.math.*;
+import java.io.*;
 /** Representa un Segmento definido por dos Puntos. */
 public class Segmento {
 
@@ -133,7 +136,12 @@ public class Segmento {
     public void asignaay(double yy) {
         a.asignay(yy);
     }
-
+    
+    /** Establece el Punto inferior con las coordenadas del Punto p. */
+    public void asignaa(Punto p) {
+        a.copia(p);
+    }
+    
     /** Establece el Punto superior con las coordenadas del Punto p. */
     public void asignab(Punto p) {
         b.copia(p);
@@ -346,25 +354,58 @@ public class Segmento {
     /**
      * @see Compara si (this) está a la izquierda, derecha o es igual que el segmento
      * @param se
-     * @return izquierda (-1) | igual (0) | derecha (1)
+     * @return izquierda (-1) | se intersectan (0) | derecha (1) | coincidentes(2)
      */
     public int compX(Segmento se) {
-        //VER--- NO ESTÁ BIEN
-        if (a.izquierdaSobre(b, se.a) && b.izquierdaSobre(b, se.b)) {
+
+        Segmento segmen = new Segmento();
+        Segmento segmen2 = new Segmento();
+        segmen.asignaa(a);
+        segmen.asignab(b);
+        segmen2.asignaa(se.leea());
+        segmen2.asignab(se.leeb());
+        try {
+
+            // Ordenamos los puntos de un segmento
+            ArrayList<Vertice> nubee = new ArrayList<Vertice>();
+            nubee.add(new Vertice(segmen2.leea()));
+            nubee.add(new Vertice(segmen2.leeb()));
+            //Collections.sort(nubee,new ComparadorMin());
+
+            ComparadorGrados.minimo = nubee.get(0);
+
+            //Ordenamos los puntos por ángulo
+            Collections.sort(nubee, new ComparadorGrados());
+            segmen2.asignaa(nubee.get(0));
+            segmen2.asignab(nubee.get(1));
+
+            nubee.clear();
+
+            //Ordenamos los puntos de otro segmento
+            nubee.add(new Vertice(segmen.leea()));
+            nubee.add(new Vertice(segmen.leeb()));
+            Collections.sort(nubee, new ComparadorMin());
+
+            ComparadorGrados.minimo = nubee.get(0);
+
+            //Ordenamos los puntos por ángulo
+            Collections.sort(nubee, new ComparadorGrados());
+            segmen.asignaa(nubee.get(0));
+            segmen.asignab(nubee.get(1));
+        } catch (Exception e) {
+            System.out.println("Error en la funcion CompX");
+        }
+
+        if (segmen.a.izquierda(segmen.b, segmen2.a) && segmen.b.izquierda(segmen.b, segmen2.b)) {
             return 1;
         } else {
-            if (a.derechaSobre(b, se.a) && b.derechaSobre(b, se.b)) {
+            if (segmen.a.derecha(segmen.b, segmen2.a) && segmen.b.derecha(segmen.b, segmen2.b)) {
                 return -1;
             } else {
-                if (intersecta(se)) {
+                if (segmen.intersecta(segmen2)) {
                     return 0; // ¿Y si se intersectan? Preguntar...
                 } else {
-                    //Se solapan en la coordenada X o Y
-                    if (se.a.izquierdaSobre(se.b, a) && se.a.izquierdaSobre(se.b, b)) {
-                        return -1;
-                    }else {
-                        return 1;
-                    }
+                     return 2;
                 }
             }
         }
