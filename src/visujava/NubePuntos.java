@@ -1,6 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class NubePuntos.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 
@@ -12,15 +14,16 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 
-/**
- *
- * @author serrano
- */
 public class NubePuntos {
 
     protected int num;
     protected ArrayList<Punto> nube;
-
+    
+    public NubePuntos(){
+        nube = new ArrayList<Punto>();
+        num = 0;
+    }
+    
     /**
      * Controctor de la clase Nube, construye una nube de puntos aleatoria
      * @param n Número de puntos
@@ -177,10 +180,6 @@ public class NubePuntos {
         NubePuntos nubeY = new NubePuntos(ordenaYnube());
         ArrayList<Vertice> Vertices = new ArrayList<Vertice>();
         
-//        System.out.print("PUNTOS MAYOR Y MENOR NUBE X: " + nubeX.nube.size());
-//       nubeX.getPunto(0).out();
-//       nubeX.getPunto(8).out();
-        
         //Metemos los vertices del cuadrilatero en sentido antihorario
         Vertices.add(new Vertice(new Punto(nubeX.getPunto(0).leex(), nubeY.getPunto(0).leey())));
         Vertices.add(new Vertice(new Punto(nubeX.getPunto(0).leex(), nubeY.getPunto(num-1).leey())));
@@ -286,5 +285,14 @@ public class NubePuntos {
         for(int i = 0; i< num;i++){
             getPunto(i).out();
         }
+    }
+    
+    public int tamanoNube(){
+        return num;
+    }
+    
+    public void anadirPunto(Punto p){
+        nube.add(p);
+        num++;
     }
 }

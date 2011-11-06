@@ -1,14 +1,14 @@
-/*
- * Clase: Recta.java
+/**
+ * @Class Recta.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author serrano
- */
+
 public class Recta {
     
     private Punto a;
@@ -83,7 +83,6 @@ public class Recta {
         for(int i=0;i< p.nVertices;i++){
             punto = intersecta(new Segmento(p.lee(i),p.lee((i+1) % p.nVertices)));
             if(punto != null){
-                System.out.println("PUNTO METIDO");
                 array.add(punto);
             }
         }

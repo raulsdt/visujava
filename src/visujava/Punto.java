@@ -1,11 +1,10 @@
-/******************************************************************************
-Clase: Punto.java
- ******************************************************************************/
+/**
+ * @Class Punto.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
+ */
 package visujava;
-
-import java.util.*;
-import java.math.*;
-import java.io.*;
 
 /** Representa un Punto 2D. */
 public class Punto {

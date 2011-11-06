@@ -1,16 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class VisuNube.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- *
- * @author serrano
- */
+
 public class VisuNube extends Vista{
     /**Lista de puntos*/
     ArrayList<Punto> nube;
@@ -30,6 +29,14 @@ public class VisuNube extends Vista{
         for(int i = 0; i < nube.size(); i++){
             vp = new VisuPunto(nube.get(i));
             vp.pinta(g);
+            
+            //Pintamos los números asociados a cada punto de la nube
+            int xp = convCoordX(nube.get(i).leex());
+            int yp = convCoordY(nube.get(i).leey());
+            
+            int tama = ANCHO_PUNTO;
+            
+            g.drawString(Integer.toString(i),(int)xp-(int)(tama/2),(int)yp-(int)(tama/2));
         }
     }
 }

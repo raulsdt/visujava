@@ -1,14 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class VisuRecta.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 
 import java.awt.*;
-/**
- *
- * @author raul
- */
+
 public class VisuRecta extends Vista{
     
     Recta r;

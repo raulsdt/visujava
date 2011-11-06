@@ -1,13 +1,10 @@
-/******************************************************************************
-Clase: Segmento.java
- * author: Jose Manuel Serrano
- * author: Raúl Salazar
- ******************************************************************************/
+/**
+ * @Class segmento.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
+ */
 package visujava;
-
-import java.util.*;
-import java.math.*;
-import java.io.*;
 
 /** Representa un Segmento definido por dos Puntos. */
 public class Segmento {

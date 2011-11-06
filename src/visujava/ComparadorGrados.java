@@ -1,13 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class ComparadorGrados.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 import java.util.*;
-/**
- *
- * @author serrano
- */
+
 public class ComparadorGrados implements Comparator<Vertice>{
     public static Punto minimo;
     

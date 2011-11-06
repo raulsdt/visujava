@@ -1,11 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class VisuRayo.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 package visujava;
 
 import java.awt.*;
-
 
 public class VisuRayo extends Vista{
     /**Rayo que se desea dibujar*/

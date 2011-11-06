@@ -1,31 +1,21 @@
-/*
- * CApplet.java
- *
- * Created on 14 de octubre de 2006, 13:05
- *
- * To change this template, choose Tools | Options and locate the template under
- * the Source Creation and Management node. Right-click the template and choose
- * Open. You can then make changes to the template in the Source Editor.
+/**
+ * @Class CApplet.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 7-11-2011
  */
 
 package visujava;
 
-/**
- *
- * @author lidia
- */
-
-
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
-/**
- *
- * @author lidia
- */
 
 public class CApplet extends java.applet.Applet {
 
+  final static int NUMERO_RANDOM =  60;
+    
   public void init(Graphics g) {
        
   }
@@ -61,44 +51,213 @@ public class CApplet extends java.applet.Applet {
   
   
   /** Modificar: meter aquí el código de prueba */
-  private void pintar(Graphics g) throws Exception {
-     /*PROBANDO POLIGONO*/       
-//      Poligono poli = new Poligono(4, 80);
-//      VisuPoligono vpoli = new VisuPoligono(poli);
-      
-      //PROBANDO NUBE-PUNTOS
-       Poligono poli = new Poligono(5, 80);
-      VisuPoligono vpoli = new VisuPoligono(poli);
-      Poligono poli2 = new Poligono();
-      
-      Vertice v1 = new Vertice(-20, 10, poli2,0);
-      Vertice v2 = new Vertice(50, 40, poli2,1);
-      Vertice v3 = new Vertice(50, 60, poli2,2);
-      Vertice v4 = new Vertice(-50, 60, poli2,3);
-      Vertice v5 = new Vertice(-30, 20, poli2,4);
-      poli2.anade(v1);
-      poli2.anade(v2);
-      poli2.anade(v3);
-      poli2.anade(v4);
-      poli2.anade(v5);
-      
-      VisuPoligono vpoli2 = new VisuPoligono(poli2);
-      
-      Poligono poliIntersecta = new Poligono();
-      poliIntersecta = poli.intersecta(poli2);
-      //System.out.println("TANGENTES: " + poli2.esTangente(0, 0, poli));
-      VisuPoligono vpoliInter = new VisuPoligono(poliIntersecta);
+private void pintar(Graphics g) throws Exception {
       /** Definimos un array polimorfo */
-      Vista vv[] = new Vista[3];
-      vv[0] = vpoli;
-      vv[1] = vpoliInter;
+      ArrayList<Vista> vv = new ArrayList<Vista>();
+
       
-      for (int i = 0; i<2; i++){
-          Vista obj = vv[i]; //enganche polimorfo
+      //Operaciones a realizar
+      
+      //1.-Generar una nube de punto nb de 50 puntos aleatorios
+          NubePuntos nb = new NubePuntos(50, 80);
+          VisuNube vnb = new VisuNube(nb);
+
+          //      vv.add(vnb);      // 1.-
+    
+      //2.-Girar 90 grados a la izquierda la nube de puntos 
+      //y añadir a nb la nube resultante
+          NubePuntos nb90 = new NubePuntos();
+          Punto aux;
+          for(int i = 0;i<nb.tamanoNube(); i++){
+              aux = new Punto(nb.getPunto(i));
+              aux.rotar90();
+              nb90.anadirPunto(aux);
+          }      
+        //Añadimos los puntos rotados a la nube nb
+          for(int i = 0; i < nb90.tamanoNube(); i++){
+              nb.anadirPunto(new Punto(nb90.getPunto(i)));
+          }
+          VisuNube vnb90 = new VisuNube(nb);
+          
+          //      vv.add(vnb90);    // 2.-
+      
+      //3.-Ordenar los puntos de arriba hacia abajo. 
+      //Numerar cada punto utilizando drawString en visuNube
+          nb.ordenaY();
+          VisuNube vnbOrd = new VisuNube(nb);
+          
+          vv.add(vnbOrd);     // 3.-
+      
+      
+      //4.-Escoger el punto de mayor y menor ordenada y el 
+      //de mayor y menor abscisa
+      
+        //Cogemos el punto de mayor y menor ordenada
+          Punto mayorOrdenada = new Punto(nb.getPunto(0));
+          Punto menorOrdenada = new Punto(nb.getPunto(nb.tamanoNube()-1));
+
+        //Cogemos el punto de mayor y menor abscisa (Ordenamos en X)
+          NubePuntos nbOrdX = nb.ordenaXnube();
+          Punto menorAbscisa = new Punto(nbOrdX.getPunto(0));
+          Punto mayorAbscisa = new Punto(nbOrdX.getPunto(nbOrdX.tamanoNube()-1));
+      
+      //5.-Formar un poligono con esos cuatro puntos y triangularlo
+      //obteniendo dos triángulos
+        
+          ArrayList<Vertice> vertices = new ArrayList<Vertice>();
+          vertices.add(new Vertice(menorOrdenada));
+          vertices.add(new Vertice(mayorAbscisa));
+          vertices.add(new Vertice(mayorOrdenada));
+          vertices.add(new Vertice(menorAbscisa));
+          Poligono poli = new Poligono(vertices, 4);
+
+          VisuPoligono vpoli = new VisuPoligono(poli);
+      
+        //Triangulamos el Poligono
+
+          Poligono triangulo1 = new Poligono();
+          triangulo1.anade(vertices.get(0));
+          triangulo1.anade(vertices.get(1));
+          triangulo1.anade(vertices.get(2));
+          VisuPoligono vtrg1 = new VisuPoligono(triangulo1);
+
+
+          Poligono triangulo2 = new Poligono();
+          triangulo2.anade(vertices.get(2));
+          triangulo2.anade(vertices.get(3));
+          triangulo2.anade(vertices.get(0));
+          VisuPoligono vtrg2 = new VisuPoligono(triangulo2);
+          
+          vv.add(vpoli);      // 4.-
+          vv.add(vtrg1);      // 5.-
+          vv.add(vtrg2);      // 5.-
+
+
+      //6.-Escoger aleariamente puntos de la nube y formar
+      // una recta, un segmento y un rayo (intersecciones entre ellos)
+            Random rnd = new Random(NUMERO_RANDOM);
+
+            //Formamos una recta
+            Recta r = new Recta(nb.getPunto(rnd.nextInt(Geometria.RANGO)),nb.getPunto(rnd.nextInt(Geometria.RANGO)));
+            VisuRecta vr = new VisuRecta(r);
+            
+            vv.add(vr);         // 6.- Recta
+
+            //Formamos un segmento
+            Segmento s = new Segmento(nb.getPunto(rnd.nextInt(Geometria.RANGO)),nb.getPunto(rnd.nextInt(Geometria.RANGO)));
+            VisuSegmento vs = new VisuSegmento(s);
+            
+            vv.add(vs);         // 6.- Segmento
+            
+            //Formamos un rayo
+            Rayo ry = new Rayo(nb.getPunto(rnd.nextInt(Geometria.RANGO)),nb.getPunto(rnd.nextInt(Geometria.RANGO)));
+            VisuRayo vry = new VisuRayo(ry);
+            
+            vv.add(vry);        // 6.- Rayo
+        
+        //INTERSECCIONES
+            Punto interseccion = new Punto();
+            //--> Rayo -Recta
+            System.out.println("\n***************************************");
+            System.out.println("6.- Intersección Rayo - Recta");
+            interseccion = ry.intersecta(r);
+            if(interseccion == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                System.out.println("INTERSECTA");
+                
+                VisuPunto vinterR = new VisuPunto(interseccion);
+                vv.add(vinterR);
+            }
+            
+            //--> Recta - Segmento
+            System.out.println("\n***************************************");
+            System.out.println("6.- Intersección Recta - Segmento");
+            interseccion = r.intersecta(s);
+            if(interseccion == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                VisuPunto vinterS = new VisuPunto(interseccion);
+                vv.add(vinterS);
+                System.out.println("INTERSECTA");
+            }
+            
+            //--> Rayo - Segmento
+            System.out.println("\n***************************************");
+            System.out.println("6.- Intersección Rayo - Segmento");
+            interseccion = ry.intersecta(s);
+            if(interseccion == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                VisuPunto vinterRY = new VisuPunto(interseccion);
+                vv.add(vinterRY);
+                System.out.println("INTERSECTA");
+            }
+            
+            //--> Recta - Aristas
+            System.out.println("\n***************************************");
+            System.out.println("6.- Intersección Recta - Aristas");
+            ArrayList<Punto> interRA = new ArrayList<Punto>();
+            
+            interRA = r.intersecta(triangulo1);
+            if(interRA == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                for(int i = 0;i < interRA.size(); i++){
+                    vv.add(new VisuPunto(interRA.get(i)));
+                }
+                System.out.println("INTERSECTA");
+            }
+            
+            interRA = r.intersecta(triangulo2);
+            if(interRA == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                for(int i = 0;i < interRA.size(); i++){
+                    vv.add(new VisuPunto(interRA.get(i)));
+                }
+                System.out.println("INTERSECTA");
+            }
+            
+            //--> Rayo - Aristas
+            System.out.println("\n***************************************");
+            System.out.println("6.- Intersección Rayo - Aristas");
+            interRA = ry.intersecta(triangulo1);
+            if(interRA == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                for(int i = 0;i < interRA.size(); i++){
+                    vv.add(new VisuPunto(interRA.get(i)));
+                }
+                System.out.println("INTERSECTA");
+            }
+            
+            interRA = ry.intersecta(triangulo2);
+            if(interRA == null){
+                System.out.println("NO INTERSECTA");
+            }else{
+                for(int i = 0;i < interRA.size(); i++){
+                    vv.add(new VisuPunto(interRA.get(i)));
+                }
+                System.out.println("INTERSECTA");
+            }
+            
+      
+        
+      //7.-Área del poligono
+      System.out.println("\n***************************************");  
+      System.out.println("7.- El área del poligo no es: " + poli.areaPoligono());
+      
+      //Fin del procesamiento
+      System.out.println("\nFIN DEL PROCESAMIENTO");
+      
+      
+      //Dibujamos
+      for (int i = 0; i<vv.size(); i++){
+          Vista obj = vv.get(i); //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
+          
       }
-      
- 
       
  
   }
