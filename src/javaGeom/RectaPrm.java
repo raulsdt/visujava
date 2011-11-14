@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package vectorjgeom;
-
-/**
- *
- * @author lidia
- */
+package javaGeom;
+import visujava.*;
 
 import math.geom2d.line.StraightLine2D;
 import math.geom2d.Point2D;

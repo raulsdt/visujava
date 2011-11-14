@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package vectorjgeom;
+package javaGeom;
 
 import math.geom2d.Vector2D;
 

@@ -246,7 +246,7 @@ private void pintar(Graphics g) throws Exception {
         
       //7.-Área del poligono
       System.out.println("\n***************************************");  
-      System.out.println("7.- El área del poligo no es: " + poli.areaPoligono());
+      System.out.println("7.- El área del poligo es: " + poli.areaPoligono());
       
       //Fin del procesamiento
       System.out.println("\nFIN DEL PROCESAMIENTO");

@@ -1,29 +1,8 @@
-/*
- * CApplet.java
- *
- * Created on 14 de octubre de 2006, 13:05
- *
- * To change this template, choose Tools | Options and locate the template under
- * the Source Creation and Management node. Right-click the template and choose
- * Open. You can then make changes to the template in the Source Editor.
- */
-
-package vectorjgeom;
-
-/**
- *
- * @author lidia
- */
-
+package javaGeom;
 
 import java.awt.*;
 import math.geom2d.Point2D;
-
-/**
- *
- * @author lidia
- */
-
+import visujava.*;
 public class CApplet extends java.applet.Applet {
 
   public void init(Graphics g) {
@@ -76,7 +55,7 @@ public class CApplet extends java.applet.Applet {
       */
       /** Definimos un array polimorfo */
       Vista vv[] = new Vista[4];
-      vv[0] = p;
+      //vv[0] = p;
       
       
       Punto k1 = new Punto (3,30);
@@ -86,8 +65,8 @@ public class CApplet extends java.applet.Applet {
       VisuRectaPrm vr = new VisuRectaPrm (new RectaPrm (k1,k2));
       
       vv[1] = vr;
-      vv[2] = kv1;
-      vv[3] = kv2;
+      //vv[2] = kv1;
+      //vv[3] = kv2;
         
       
       for (int i = 0; i<4; i++){
