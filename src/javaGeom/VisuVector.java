@@ -12,7 +12,7 @@ import visujava.VisuPunto;
 
 //Heredemoa de Visupunto y adaptamos con el constructor
 public class VisuVector extends VisuPunto{
-
+    
     public VisuVector(Vector v) {
         super(new Punto(v.leex(),v.leey()));
     }

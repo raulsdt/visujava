@@ -11,7 +11,7 @@ import java.awt.*;
 
 public abstract class Vista {
    
-  static int ANCHO , ALTO,  ANCHO_PUNTO=6;
+  public static int ANCHO , ALTO,  ANCHO_PUNTO=6;
   
   public int convCoordX (double x) {
       return ((int)(x*ANCHO)/(2*Geometria.RANGO)+(ANCHO/2)); 

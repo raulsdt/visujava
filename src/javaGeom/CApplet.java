@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import visujava.Geometria;
 import visujava.Punto;
 import visujava.Vista;
+import visujava.VisuPunto;
 public class CApplet extends java.applet.Applet {
 
   public void init(Graphics g) {
@@ -55,8 +56,10 @@ public class CApplet extends java.applet.Applet {
       VisuRectaPrm vr1 = new VisuRectaPrm(r1);
       
       Punto p1 = new Punto(20,20);
-      RectaPrm paralela = r1.paralelaDistancia(10);
-      VisuRectaPrm vparalela = new VisuRectaPrm(paralela);
+      
+      //Probamos el rayo
+      RayoPrm ry1 = new RayoPrm(new Punto(-30,40), new Punto(40,-60));
+      VisuRayoPrm vry = new VisuRayoPrm(ry1);
       
       
       
@@ -65,7 +68,8 @@ public class CApplet extends java.applet.Applet {
       vv.add(vv1);
       vv.add(vv2);
       vv.add(vr1);
-      vv.add(vparalela);
+      vv.add(vry);
+
       
       
       for (int i = 0; i<vv.size(); i++){
