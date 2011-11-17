@@ -1,20 +1,17 @@
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @Class VisuRectaPrm.java
+ * @Author José Manuel Serrano Mármol
+ * @Author Raul Salazar de Torres
+ * @Date 5-12-2011
  */
+
 package javaGeom;
 
-/**
- *
- * @author lidia
- */
 import java.awt.*;
 import math.geom2d.Box2D;
 import math.geom2d.Point2D;
 import math.geom2d.line.StraightLine2D;
-
-
+import visujava.Vista;
 
 
 public class VisuRectaPrm extends Vista {
@@ -30,10 +27,11 @@ public class VisuRectaPrm extends Vista {
     }
     
         
-    @Override public void pinta (Graphics g){
+    @Override 
+    public void pinta (Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         Box2D box = new Box2D(0, ANCHO, 0, ALTO);
-	//rp.r.clip(box).draw(g2);
+        
         Point2D p1 = new Point2D (rp.r.getOrigin());
         Point2D p2 = new Point2D (rp.r.getPoint(5));
         
@@ -47,8 +45,6 @@ public class VisuRectaPrm extends Vista {
         StraightLine2D sl = new StraightLine2D (pp1,pp2); 
         sl.clip(box).draw(g2);
         
-        //Point2D p1 = new Point2D (3,30);
-        //Point2D p2 = new Point2D (4,40);
         p1.draw(g2);
         p2.draw(g2);
     }    

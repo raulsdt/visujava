@@ -1,8 +1,10 @@
 package javaGeom;
 
 import java.awt.*;
-import math.geom2d.Point2D;
-import visujava.*;
+import java.util.ArrayList;
+import visujava.Geometria;
+import visujava.Punto;
+import visujava.Vista;
 public class CApplet extends java.applet.Applet {
 
   public void init(Graphics g) {
@@ -41,46 +43,36 @@ public class CApplet extends java.applet.Applet {
   
   /** Modificar: meter aquí el código de prueba */
   private void pintar(Graphics g) throws Exception {
-            
-      VisuPunto p = new VisuPunto(new Punto(-40,40));
-      //VisuSegmento s = new VisuSegmento(new Segmento(new Punto(4,4),new Punto(40,40)));
+      //Probamos el vector
+      Vector v1 = new Vector(-40, -50);
+      VisuVector vv1 = new VisuVector(v1);
       
-      /*
-      Poligono pol = new Poligono();
-      pol.anade(new Vertice(0, 0, pol));
-      pol.anade(new Vertice(50, 0, pol));
-      pol.anade(new Vertice(50, 50, pol));
-      pol.anade(new Vertice(0, 50, pol));
-      VisuPoligono vpol = new VisuPoligono(pol);
-      */
+      Vector v2 = new Vector(20, 20);
+      VisuVector vv2 = new VisuVector(v2);
+      
+      //Probamos la recta
+      RectaPrm r1 = new RectaPrm(v1,v2);
+      VisuRectaPrm vr1 = new VisuRectaPrm(r1);
+      
+      Punto p1 = new Punto(20,20);
+      RectaPrm paralela = r1.paralelaDistancia(10);
+      VisuRectaPrm vparalela = new VisuRectaPrm(paralela);
+      
+      
+      
       /** Definimos un array polimorfo */
-      Vista vv[] = new Vista[4];
-      //vv[0] = p;
+      ArrayList<Vista> vv = new ArrayList<Vista>();
+      vv.add(vv1);
+      vv.add(vv2);
+      vv.add(vr1);
+      vv.add(vparalela);
       
       
-      Punto k1 = new Punto (3,30);
-      Punto k2 = new Punto (4,40);
-      VisuPunto kv1 = new VisuPunto (k1); 
-      VisuPunto kv2 = new VisuPunto (k2);      
-      VisuRectaPrm vr = new VisuRectaPrm (new RectaPrm (k1,k2));
-      
-      vv[1] = vr;
-      //vv[2] = kv1;
-      //vv[3] = kv2;
-        
-      
-      for (int i = 0; i<4; i++){
-          Vista obj = vv[i]; //enganche polimorfo
+      for (int i = 0; i<vv.size(); i++){
+          Vista obj = vv.get(i); //enganche polimorfo
           obj.pinta(g);     //ligadura dinámica
       }
 
-    /*  
-      Graphics2D g2 = (Graphics2D) g;
-      Point2D kk1 = new Point2D (400, 30);
-      kk1.draw(g2);
-      Point2D kk2 = new Point2D (180, 100);
-      kk2.draw(g2);
-      */
   }
   
     @Override public void paint( Graphics g ) {
