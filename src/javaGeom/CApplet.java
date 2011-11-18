@@ -55,11 +55,29 @@ public class CApplet extends java.applet.Applet {
       RectaPrm r1 = new RectaPrm(v1,v2);
       VisuRectaPrm vr1 = new VisuRectaPrm(r1);
       
-      Punto p1 = new Punto(20,20);
+      Punto p1 = new Punto(20,20);    
+      Punto p2 = new Punto(40,40);
       
       //Probamos el rayo
-      RayoPrm ry1 = new RayoPrm(new Punto(-30,40), new Punto(40,-60));
+      RayoPrm ry1 = new RayoPrm(new Punto(30,40), new Punto(30,-60));
       VisuRayoPrm vry = new VisuRayoPrm(ry1);
+      
+      //Probamos el segmento
+      SegmentoPrm segPrm = new SegmentoPrm(p1,p2);
+      SegmentoPrm segaux = new SegmentoPrm(30,40,30,10);
+      VisuSegmentoPrm vrs = new VisuSegmentoPrm(segPrm);
+      
+      //Diferentes pruebas con la clase segmento
+      Punto paux = new Punto(30, 30);
+      if(segPrm.contiene(paux)){
+          System.out.println("Correcto");
+      }
+      Punto p = new Punto(segPrm.intersecta(ry1));
+     
+          System.out.println("Punto de interseccion:(Seg-Rayo)  " + segPrm.intersecta(ry1).leex() + ", " + segPrm.intersecta(ry1).leey() );   
+          System.out.println("Punto de interseccion:(Seg-Recta)  " + segPrm.intersecta(r1).leex() + ", " + segPrm.intersecta(r1).leey() );
+          System.out.println("Punto de interseccion:(Seg-Rayo)  " + segPrm.intersecta(segaux).leex() + ", " + segPrm.intersecta(segaux).leey() );
+      
       
       
       

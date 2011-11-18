@@ -7,6 +7,8 @@
 
 package javaGeom;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import math.geom2d.line.LineSegment2D;
 import visujava.Punto;
 
@@ -20,6 +22,9 @@ public class SegmentoPrm {
      * @param d 
      */
     public SegmentoPrm(Punto o,Punto d){
+        Point2D p1 = new math.geom2d.Point2D(o.leex(), o.leey());
+        Point2D p2 = new math.geom2d.Point2D(d.leex(), d.leey());
+         s = new LineSegment2D(p1, p2);
         
     }
     
@@ -31,7 +36,9 @@ public class SegmentoPrm {
      * @param dy 
      */
     public SegmentoPrm(double ox,double oy,double dx,double dy){
-        
+        Point2D p1 = new math.geom2d.Point2D(ox, oy);
+        Point2D p2 = new math.geom2d.Point2D(dx, dy);
+         s = new LineSegment2D(p1, p2);
     }
     
     /**
@@ -41,7 +48,8 @@ public class SegmentoPrm {
      */
     public boolean contiene(Punto p){
         //IMPLEMENTAR
-        return true;
+        Point2D p1 = new math.geom2d.Point2D(p.leex(), p.leey());
+       return s.contains(p1);
     }
     
     /**
@@ -50,8 +58,10 @@ public class SegmentoPrm {
      * @return El punto de intersección o null si no intersecta
      */
     public Punto intersecta(RectaPrm r){
-        //IMPLEMENTAR
-        return null;
+        
+       // Point2D p = new math.geom2d.Point2D(s.getIntersection(new LineSegment2D(r.r.getFirstPoint(), r.r.getLastPoint())));
+        Point2D p = new math.geom2d.Point2D(s.getIntersection(r.r));
+        return (new Punto(p.getX(), p.getY()));
     }
     
     /**
@@ -60,8 +70,11 @@ public class SegmentoPrm {
      * @return El punto de intersección o null si no intersecta
      */
     public Punto intersecta(RayoPrm ry){
-        //IMPLEMENTAR
-        return null;
+
+       // Point2D p = new math.geom2d.Point2D(s.getIntersection(new LineSegment2D(ry.ry.getFirstPoint(), ry.ry.getLastPoint())));
+        
+        Point2D p = new math.geom2d.Point2D(s.getIntersection(ry.ry));
+        return (new Punto(p.getX(), p.getY()));
     }
     
     /**
@@ -69,9 +82,12 @@ public class SegmentoPrm {
      * @param s Segmento
      * @return El punto de intersección o null si no intersecta
      */
-    public Punto intersecta(SegmentoPrm s){
-        //IMPLEMENTAR
-        return null;
+    public Punto intersecta(SegmentoPrm r){
+        Point2D p = s.getIntersection(r.s);
+
+        return (new Punto(p.getX(), p.getY()));
+        
+
     }
     
     /**
@@ -80,8 +96,9 @@ public class SegmentoPrm {
      * @return La distancia entre el segmento y el punto
      */
     public double distanciaPunto(Punto p){
-        //IMPLEMENTAR
-        return 0;
+        Point2D p1 = new math.geom2d.Point2D(p.leex(), p.leey());
+       return  s.getDistance(p1);
+        
     }
     
     public void out(){
