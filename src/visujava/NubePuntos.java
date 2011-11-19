@@ -40,7 +40,8 @@ public class NubePuntos {
         Random rnd = new Random(semilla);
         
         for (int i = 0; i < n; i++) {
-            nube.add(new Punto(rnd.nextInt(Geometria.RANGO), rnd.nextInt(Geometria.RANGO)));
+            //Rango [-90,90]
+            nube.add(new Punto(Math.floor(rnd.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(rnd.nextFloat()*(90-(-90)+1)+(-90))));
         }
         num = n;
 

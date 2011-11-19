@@ -9,19 +9,18 @@ package javaGeom;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-import math.geom2d.Vector2D;
 import visujava.Geometria;
 import visujava.NubePuntos;
 import visujava.Poligono;
 import visujava.Punto;
-import visujava.Recta;
 import visujava.Vista;
 import visujava.VisuNube;
 import visujava.VisuPoligono;
 import visujava.VisuPunto;
 
 public class CApplet extends java.applet.Applet {
-
+    static final int SEMILLA = 99;
+    
     public void init(Graphics g) {
     }
 
@@ -56,20 +55,20 @@ public class CApplet extends java.applet.Applet {
 
     /** Modificar: meter aquí el código de prueba */
     private void pintar(Graphics g) throws Exception {
-        Random r = new Random();
+        Random r = new Random(SEMILLA);
 
         //Elementos que intervienen (2 vectores, 2 rectas, 2 rayos, 2 segmentos)
-        Vector v1 = new Vector(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
-        Vector v2 = new Vector(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
+        Vector v1 = new Vector(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)));
+        Vector v2 = new Vector(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)));
 
-        RectaPrm r1 = new RectaPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
-        RectaPrm r2 = new RectaPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
+        RectaPrm r1 = new RectaPrm(new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))), new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))));
+        RectaPrm r2 = new RectaPrm(new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))), new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))));
 
-        RayoPrm ra1 = new RayoPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
-        RayoPrm ra2 = new RayoPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
+        RayoPrm ra1 = new RayoPrm(new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))), new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))));
+        RayoPrm ra2 = new RayoPrm(new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))), new Punto(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90))));
 
-        SegmentoPrm se1 = new SegmentoPrm(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
-        SegmentoPrm se2 = new SegmentoPrm(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
+        SegmentoPrm se1 = new SegmentoPrm(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)));
+        SegmentoPrm se2 = new SegmentoPrm(Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)), Math.floor(r.nextFloat()*(90-(-90)+1)+(-90)));
 
         //Posibles intersecciones
         ArrayList<Vista> vv = new ArrayList<Vista>();
