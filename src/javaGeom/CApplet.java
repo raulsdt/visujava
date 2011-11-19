@@ -1,3 +1,9 @@
+/**
+ * @author Jose Manuel Serrano
+ * @author Raul Salazar
+ * @date 17/11/11
+ * @file CApplet.java
+ */
 package javaGeom;
 
 import java.awt.*;
@@ -50,18 +56,20 @@ public class CApplet extends java.applet.Applet {
 
     /** Modificar: meter aquí el código de prueba */
     private void pintar(Graphics g) throws Exception {
-        //Probamos el vector
-        Vector v1 = new Vector(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO);
-        Vector v2 = new Vector(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO);
+        Random r = new Random();
 
-        RectaPrm r1 = new RectaPrm(new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO), new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO));
-        RectaPrm r2 = new RectaPrm(new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO), new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO));
+        //Elementos que intervienen (2 vectores, 2 rectas, 2 rayos, 2 segmentos)
+        Vector v1 = new Vector(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
+        Vector v2 = new Vector(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
 
-        RayoPrm ra1 = new RayoPrm(new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO), new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO));
-        RayoPrm ra2 = new RayoPrm(new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO), new Punto(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO));
+        RectaPrm r1 = new RectaPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
+        RectaPrm r2 = new RectaPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
 
-        SegmentoPrm se1 = new SegmentoPrm(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO);
-        SegmentoPrm se2 = new SegmentoPrm(Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO, Math.random() % Geometria.RANGO);
+        RayoPrm ra1 = new RayoPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
+        RayoPrm ra2 = new RayoPrm(new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)), new Punto(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO)));
+
+        SegmentoPrm se1 = new SegmentoPrm(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
+        SegmentoPrm se2 = new SegmentoPrm(r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO), r.nextInt(Geometria.RANGO));
 
         //Posibles intersecciones
         ArrayList<Vista> vv = new ArrayList<Vista>();
@@ -112,34 +120,33 @@ public class CApplet extends java.applet.Applet {
             vv.add(pp7);
         }
 
-
-        VisuVector vv1 = new VisuVector(v1);
-        g.drawString("v1", (int) v1.leex(), (int) v1.leey());
-        VisuVector vv2 = new VisuVector(v2);
-        g.drawString("v2", (int) v1.leex(), (int) v1.leey());
-        VisuRectaPrm vr1 = new VisuRectaPrm(r1);
-//        Mirar esta parte. Importante!
-//        g.drawString("r1", (int) r1.r.getFirstPoint().x ,
-//                (int) r1.r.getFirstPoint().y );
-        VisuRectaPrm vr2 = new VisuRectaPrm(r2);
-//        g.drawString("r2", (int) r2.r.getFirstPoint().x ,
-//                (int) r2.r.getFirstPoint().y );
+        //Creamos Visu y escribimos nombre de los elementos
         
+        VisuVector vv1 = new VisuVector(v1);
+        g.drawString("v1", (int) vv1.convCoordX(v1.leex()), (int) vv1.convCoordY(v1.leey()));
+        VisuVector vv2 = new VisuVector(v2);
+        g.drawString("v2", (int) vv2.convCoordX(v1.leex()), (int) vv2.convCoordY(v1.leey()));
+        VisuRectaPrm vr1 = new VisuRectaPrm(r1);
+        g.drawString("r1", (int) vr1.convCoordX(r1.r.getOrigin().x),
+                (int) vr1.convCoordY(r1.r.getOrigin().y));
+        VisuRectaPrm vr2 = new VisuRectaPrm(r2);
+        g.drawString("r2", (int) vr2.convCoordX(r2.r.getOrigin().x),
+                (int) vr2.convCoordY(r2.r.getOrigin().y));
         VisuRayoPrm vry = new VisuRayoPrm(ra1);
-        g.drawString("y1", (int) ra1.ry.getFirstPoint().x ,
-                (int) ra1.ry.getFirstPoint().y );
+        g.drawString("y1", (int) vry.convCoordX(ra1.ry.getFirstPoint().x),
+                (int) vry.convCoordY(ra1.ry.getFirstPoint().y));
         VisuRayoPrm vrz = new VisuRayoPrm(ra2);
-        g.drawString("y2", (int) ra2.ry.getFirstPoint().x ,
-                (int) ra2.ry.getFirstPoint().y );
+        g.drawString("y2", (int) vrz.convCoordX(ra2.ry.getFirstPoint().x),
+                (int) vrz.convCoordY(ra2.ry.getFirstPoint().y));
         VisuSegmentoPrm vrs = new VisuSegmentoPrm(se1);
-        g.drawString("s1", (int)se1.s.getFirstPoint().x ,
-                (int) se1.s.getFirstPoint().y );
+        g.drawString("s1", (int) vrs.convCoordX(se1.s.getFirstPoint().x),
+                (int) vrs.convCoordY(se1.s.getFirstPoint().y));
         VisuSegmentoPrm vrsz = new VisuSegmentoPrm(se2);
-        g.drawString("s2", (int) se2.s.getFirstPoint().x ,
-                (int) se2.s.getFirstPoint().y );
+        g.drawString("s2", (int) vrsz.convCoordX(se2.s.getFirstPoint().x),
+                (int) vrsz.convCoordY(se2.s.getFirstPoint().y));
+        
 
         /** Definimos un array polimorfo */
-        
         vv.add(vv1);
         vv.add(vv2);
         vv.add(vr1);
