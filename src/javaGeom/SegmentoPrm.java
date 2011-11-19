@@ -58,8 +58,7 @@ public class SegmentoPrm {
      * @return El punto de intersección o null si no intersecta
      */
     public Punto intersecta(RectaPrm r){
-        
-       // Point2D p = new math.geom2d.Point2D(s.getIntersection(new LineSegment2D(r.r.getFirstPoint(), r.r.getLastPoint())));
+        if(s.getIntersection(r.r)==null) return null;
         Point2D p = new math.geom2d.Point2D(s.getIntersection(r.r));
         return (new Punto(p.getX(), p.getY()));
     }
@@ -71,8 +70,7 @@ public class SegmentoPrm {
      */
     public Punto intersecta(RayoPrm ry){
 
-       // Point2D p = new math.geom2d.Point2D(s.getIntersection(new LineSegment2D(ry.ry.getFirstPoint(), ry.ry.getLastPoint())));
-        
+        if(s.getIntersection(ry.ry)==null) return null;
         Point2D p = new math.geom2d.Point2D(s.getIntersection(ry.ry));
         return (new Punto(p.getX(), p.getY()));
     }
@@ -83,6 +81,7 @@ public class SegmentoPrm {
      * @return El punto de intersección o null si no intersecta
      */
     public Punto intersecta(SegmentoPrm r){
+        if(s.getIntersection(r.s) ==null) return null;
         Point2D p = s.getIntersection(r.s);
 
         return (new Punto(p.getX(), p.getY()));

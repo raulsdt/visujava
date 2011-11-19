@@ -25,6 +25,7 @@ public class RectaPrm {
        r = new StraightLine2D (p1,p2);
    }
    
+   
    /**
     * Constructor de la recta dados dos puntos de la recta
     * @param p1 Punto de la recta
