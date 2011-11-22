@@ -124,7 +124,7 @@ public class CApplet extends java.applet.Applet {
         VisuVector vv1 = new VisuVector(v1);
         g.drawString("v1", (int) vv1.convCoordX(v1.leex()), (int) vv1.convCoordY(v1.leey()));
         VisuVector vv2 = new VisuVector(v2);
-        g.drawString("v2", (int) vv2.convCoordX(v1.leex()), (int) vv2.convCoordY(v1.leey()));
+        g.drawString("v2", (int) vv2.convCoordX(v2.leex()), (int) vv2.convCoordY(v2.leey()));
         VisuRectaPrm vr1 = new VisuRectaPrm(r1);
         g.drawString("r1", (int) vr1.convCoordX(r1.r.getOrigin().x),
                 (int) vr1.convCoordY(r1.r.getOrigin().y));
@@ -143,6 +143,17 @@ public class CApplet extends java.applet.Applet {
         VisuSegmentoPrm vrsz = new VisuSegmentoPrm(se2);
         g.drawString("s2", (int) vrsz.convCoordX(se2.s.getFirstPoint().x),
                 (int) vrsz.convCoordY(se2.s.getFirstPoint().y));
+        
+        /*Calculamos distancias*/
+        
+        //DISTANCIA v1-r1
+        System.out.println("Distancia v1-r1: " + r1.distanciaPunto(new Punto(v1.leex(),v1.leey())));
+        
+        ///DISTANCIA v1-y1
+        System.out.println("Distancia v1-y1: " + ra1.distanciaPunto(new Punto(v1.leex(),v1.leey())));
+        
+        //DISTANCIA v1-s1
+        System.out.println("Sitancia v1-s1: " + se1.distanciaPunto(new Punto(v1.leex(),v1.leey())));
         
 
         /** Definimos un array polimorfo */
